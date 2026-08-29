@@ -70,6 +70,7 @@ a:hover { color: #ff4328; }
 .logo-chip.is-plain img { height: 96px; }
 @media (prefers-reduced-motion: reduce) { .logo-track { animation: none; } }
 @media (max-width: 620px) { a[data-navlink] { display: none; } }
+.seo-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 </style>
 </helmet>
 <div style="font-family: 'Archivo', sans-serif; color: #1a1512; background: #f6f4f1; min-width: 320px">
@@ -78,10 +79,10 @@ a:hover { color: #ff4328; }
   <nav style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px clamp(20px, 5vw, 48px); border-bottom: 1px solid #e4dfd8; position: sticky; top: 0; background: #f6f4f1; z-index: 10">
     <a href="/" style="font-family: 'Archivo Black', sans-serif; font-size: 22px; letter-spacing: -0.5px; white-space: nowrap; text-decoration: none; color: #1a1512" aria-label="Foxie Media">FOXIE<span style="color: #ff4328">*</span>MEDIA</a>
     <div style="display: flex; align-items: center; gap: clamp(14px, 3vw, 28px)">
-      <a href="/work" data-navlink="1" style="text-decoration: none; font-size: 15px">Work</a>
-      <a href="/services" data-navlink="1" style="text-decoration: none; font-size: 15px">Services</a>
-      <a href="/about" data-navlink="1" style="text-decoration: none; font-size: 15px">About</a>
-      <a href="/contact" style="text-decoration: none; background: #ff4328; color: #f6f4f1; padding: 12px 22px; border-radius: 999px; font-size: 15px; font-weight: 600" style-hover="background: #1a1512; color: #f6f4f1">Contact</a>
+      <a href="#work" data-navlink="1" style="text-decoration: none; font-size: 15px">Work</a>
+      <a href="#services" data-navlink="1" style="text-decoration: none; font-size: 15px">Services</a>
+      <a href="#about" data-navlink="1" style="text-decoration: none; font-size: 15px">About</a>
+      <a href="#contact" style="text-decoration: none; background: #ff4328; color: #f6f4f1; padding: 12px 22px; border-radius: 999px; font-size: 15px; font-weight: 600" style-hover="background: #1a1512; color: #f6f4f1">Contact</a>
     </div>
   </nav>
 
@@ -234,6 +235,12 @@ a:hover { color: #ff4328; }
       <a href="mailto:varsha@foxie.media" style="color: #a09585; text-decoration: none" style-hover="color: #f6f4f1">varsha@foxie.media</a>
     </div>
     <div style="font-size: 13px">© 2026 Foxie Media</div>
+    <nav class="seo-only" aria-label="Site">
+      <a href="/work">Work</a>
+      <a href="/services">Services</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
   </footer>
 </div>
 </x-dc>
