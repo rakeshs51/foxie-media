@@ -4,20 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Foxie Media — Personal Branding &amp; Brand Management</title>
-<meta name="description" content="Foxie Media is a creative company helping ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content. Led by Varsha Sangolli.">
-<meta name="robots" content="index, follow">
+<meta name="description" content="Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. Strategy, storytelling and content for ambitious brands and founders.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Varsha Sangolli">
 <link rel="canonical" href="https://foxie.media/">
+<link rel="alternate" type="text/plain" href="https://foxie.media/llms.txt" title="LLM briefing">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Foxie Media">
+<meta property="og:locale" content="en_IN">
 <meta property="og:url" content="https://foxie.media/">
 <meta property="og:title" content="Foxie Media — Personal Branding &amp; Brand Management">
-<meta property="og:description" content="We make brands and founders impossible to ignore. Strategy, storytelling and content — led by Varsha Sangolli.">
+<meta property="og:description" content="Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. We make brands and founders impossible to ignore.">
 <meta property="og:image" content="https://foxie.media/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Foxie Media — Personal Branding &amp; Brand Management">
-<meta name="twitter:description" content="We make brands and founders impossible to ignore. Strategy, storytelling and content — led by Varsha Sangolli.">
+<meta name="twitter:description" content="Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli.">
 <meta name="twitter:image" content="https://foxie.media/og-image.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
@@ -26,26 +29,140 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Foxie Media",
-  "alternateName": "FOXIE MEDIA",
-  "url": "https://foxie.media/",
-  "logo": "https://foxie.media/favicon.png",
-  "image": "https://foxie.media/og-image.png",
-  "email": "varsha@foxie.media",
-  "telephone": "+917338178311",
-  "description": "Foxie Media is a creative company helping ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.",
-  "founder": {
-    "@type": "Person",
-    "name": "Varsha Sangolli",
-    "url": "https://www.linkedin.com/in/varsha-sangolli-177542349"
-  },
-  "sameAs": [
-    "https://www.instagram.com/hey.varshh/",
-    "https://www.linkedin.com/in/varsha-sangolli-177542349"
-  ],
-  "areaServed": "IN",
-  "priceRange": "$$"
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://foxie.media/#organization",
+      "name": "Foxie Media",
+      "alternateName": ["FOXIE MEDIA", "Foxie"],
+      "url": "https://foxie.media/",
+      "logo": { "@type": "ImageObject", "url": "https://foxie.media/favicon.png", "width": 192, "height": 192 },
+      "image": "https://foxie.media/og-image.png",
+      "email": "varsha@foxie.media",
+      "telephone": "+917338178311",
+      "description": "Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.",
+      "slogan": "We make brands and founders impossible to ignore.",
+      "founder": { "@id": "https://foxie.media/#varsha" },
+      "sameAs": [
+        "https://www.instagram.com/hey.varshh/",
+        "https://www.linkedin.com/in/varsha-sangolli-177542349"
+      ],
+      "areaServed": { "@type": "Country", "name": "India" },
+      "address": { "@type": "PostalAddress", "addressCountry": "IN" },
+      "priceRange": "$$",
+      "knowsAbout": ["Personal branding", "Brand management", "Content strategy", "Founder branding", "Social media content", "Creative direction"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Foxie Media services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Personal Branding",
+              "url": "https://foxie.media/services#personal-branding",
+              "provider": { "@id": "https://foxie.media/#organization" }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Brand Management",
+              "url": "https://foxie.media/services#brand-management",
+              "provider": { "@id": "https://foxie.media/#organization" }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://foxie.media/#varsha",
+      "name": "Varsha Sangolli",
+      "jobTitle": "Founder",
+      "worksFor": { "@id": "https://foxie.media/#organization" },
+      "url": "https://foxie.media/about",
+      "email": "varsha@foxie.media",
+      "sameAs": [
+        "https://www.instagram.com/hey.varshh/",
+        "https://www.linkedin.com/in/varsha-sangolli-177542349"
+      ],
+      "description": "Varsha Sangolli is the founder of Foxie Media, a personal branding and brand management studio."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://foxie.media/#website",
+      "url": "https://foxie.media/",
+      "name": "Foxie Media",
+      "publisher": { "@id": "https://foxie.media/#organization" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://foxie.media/#webpage",
+      "url": "https://foxie.media/",
+      "name": "Foxie Media — Personal Branding & Brand Management",
+      "isPartOf": { "@id": "https://foxie.media/#website" },
+      "about": { "@id": "https://foxie.media/#organization" },
+      "primaryImageOfPage": "https://foxie.media/og-image.png",
+      "dateModified": "2026-08-31"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://foxie.media/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Foxie Media?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who founded Foxie Media?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Varsha Sangolli founded Foxie Media to be a creative partner for brands and founders that understands the internet, thinks strategically, cares about the idea, and can execute content properly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Foxie Media do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Foxie Media offers two core services: personal branding for founders and brand management for companies. Design, editing and AI creative are built into the work. Strategy comes first, then execution."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Foxie Media a social media marketing agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Foxie Media is not a traditional social media marketing agency. It is a strategy-first personal branding and brand management studio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who has Foxie Media worked with?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Selected Foxie Media work includes Toolandtea, Swishy AI, Mugdha Bhagchandka, LifeAt, Sindhu Biswal, Naiyya Saggi and Mihika. Results include Toolandtea growing from 0 to 10K Instagram followers in 30 days, Swishy AI from 0 to 15K in 30 days, and Mugdha Bhagchandka from 5K to 10K in 30 days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I contact Foxie Media?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Email varsha@foxie.media or call +91 73381 78311. The website is foxie.media."
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
 <script src="./support.js"></script>
@@ -94,7 +211,7 @@ a:hover { color: #ff4328; }
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #ff4328; margin: 0 0 24px; letter-spacing: 1px">BRAND MANAGEMENT × PERSONAL BRANDING</p>
     <h1 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.02; margin: 0 0 32px; letter-spacing: -2px; text-wrap: pretty">We make <span style="color: #ff4328">brands</span> &amp; <span style="color: #ff4328">founders</span> impossible to ignore.</h1>
     <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap">
-      <p style="font-size: 20px; line-height: 1.55; max-width: 580px; margin: 0; color: #4a423b">Foxie is a creative company helping ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
+      <p style="font-size: 20px; line-height: 1.55; max-width: 580px; margin: 0; color: #4a423b">Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. We help ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
       <a href="mailto:varsha@foxie.media" style="text-decoration: none; background: #1a1512; color: #f6f4f1; padding: 18px 34px; border-radius: 999px; font-size: 17px; font-weight: 600; white-space: nowrap" style-hover="background: #ff4328; color: #f6f4f1">Work with us →</a>
     </div>
   </header>
@@ -222,6 +339,37 @@ a:hover { color: #ff4328; }
   <section id="about" style="padding: 0 clamp(20px, 5vw, 48px) clamp(60px, 9vw, 100px); max-width: 900px; margin: 0 auto; text-align: center">
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">LED BY VARSHA SANGOLLI</p>
     <p style="font-size: clamp(20px, 2.6vw, 26px); line-height: 1.45; font-weight: 500; letter-spacing: -0.4px; margin: 0; text-wrap: pretty">"I built Foxie to be the kind of creative partner I felt brands and founders actually needed, one that understands the internet, thinks strategically, cares about the idea, and can execute it properly."</p>
+    <p style="font-size: 16px; line-height: 1.6; color: #4a423b; max-width: 640px; margin: 28px auto 0">Varsha Sangolli is the founder of Foxie Media. The studio is not a traditional social media marketing agency — strategy first, then design, editing and AI creative.</p>
+  </section>
+
+  <!-- FAQ for answer engines -->
+  <section id="faq" style="padding: 0 clamp(20px, 5vw, 48px) clamp(60px, 9vw, 100px); max-width: 800px; margin: 0 auto">
+    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 48px); letter-spacing: -1.5px; margin: 0 0 12px">Questions, answered</h2>
+    <p style="font-size: 16px; color: #4a423b; margin: 0 0 32px">What Foxie Media is, who runs it, and how to get in touch.</p>
+    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
+      <h3 style="font-size: 18px; margin: 0 0 10px">What is Foxie Media?</h3>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
+    </div>
+    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
+      <h3 style="font-size: 18px; margin: 0 0 10px">Who founded Foxie Media?</h3>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Varsha Sangolli founded Foxie Media to be a creative partner for brands and founders that understands the internet, thinks strategically, cares about the idea, and can execute content properly.</p>
+    </div>
+    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
+      <h3 style="font-size: 18px; margin: 0 0 10px">What does Foxie Media do?</h3>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Foxie Media offers two core services: personal branding for founders and brand management for companies. Design, editing and AI creative are built into the work. Strategy comes first, then execution.</p>
+    </div>
+    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
+      <h3 style="font-size: 18px; margin: 0 0 10px">Is Foxie Media a social media marketing agency?</h3>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">No. Foxie Media is not a traditional social media marketing agency. It is a strategy-first personal branding and brand management studio.</p>
+    </div>
+    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
+      <h3 style="font-size: 18px; margin: 0 0 10px">Who has Foxie Media worked with?</h3>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Selected work includes Toolandtea, Swishy AI, Mugdha Bhagchandka, LifeAt, Sindhu Biswal, Naiyya Saggi and Mihika. Results include Toolandtea growing from 0 to 10K Instagram followers in 30 days, Swishy AI from 0 to 15K in 30 days, and Mugdha Bhagchandka from 5K to 10K in 30 days.</p>
+    </div>
+    <div style="border-top: 1px solid #e4dfd8; border-bottom: 1px solid #e4dfd8; padding: 22px 0">
+      <h3 style="font-size: 18px; margin: 0 0 10px">How do I contact Foxie Media?</h3>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Email <a href="mailto:varsha@foxie.media">varsha@foxie.media</a> or call <a href="tel:+917338178311">+91 73381 78311</a>.</p>
+    </div>
   </section>
 
   <!-- CTA + footer -->
@@ -234,6 +382,7 @@ a:hover { color: #ff4328; }
   <footer style="background: #1a1512; color: #a09585; padding: 32px clamp(20px, 5vw, 48px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px">
     <div style="font-family: 'Archivo Black', sans-serif; color: #f6f4f1; font-size: 16px">FOXIE<span style="color: #ff4328">*</span>MEDIA</div>
     <div style="display: flex; gap: 24px; font-size: 14px">
+      <a href="/faq" style="color: #a09585; text-decoration: none" style-hover="color: #f6f4f1">FAQ</a>
       <a href="https://www.instagram.com/hey.varshh/" target="_blank" rel="noopener" style="color: #a09585; text-decoration: none" style-hover="color: #f6f4f1">Instagram</a>
       <a href="https://www.linkedin.com/in/varsha-sangolli-177542349" target="_blank" rel="noopener" style="color: #a09585; text-decoration: none" style-hover="color: #f6f4f1">LinkedIn</a>
       <a href="mailto:varsha@foxie.media" style="color: #a09585; text-decoration: none" style-hover="color: #f6f4f1">varsha@foxie.media</a>
@@ -244,6 +393,7 @@ a:hover { color: #ff4328; }
       <a href="/work">Work</a>
       <a href="/services">Services</a>
       <a href="/about">About</a>
+      <a href="/faq">FAQ</a>
       <a href="/contact">Contact</a>
     </nav>
   </footer>

@@ -3,18 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Services — Foxie Media</title>
-<meta name="description" content="Foxie Media services: personal branding and brand management, plus design, editing and AI creative — strategy first, then execution.">
+<title>Personal Branding &amp; Brand Management Services — Foxie Media</title>
+<meta name="description" content="Foxie Media services: personal branding for founders and brand management for companies, plus design, editing and AI creative. Strategy first, then execution.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Varsha Sangolli">
 <link rel="canonical" href="https://foxie.media/services">
-<meta property="og:title" content="Services — Foxie Media">
+<link rel="alternate" type="text/plain" href="https://foxie.media/llms.txt" title="LLM briefing">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Foxie Media">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="Personal Branding &amp; Brand Management Services — Foxie Media">
 <meta property="og:description" content="Personal branding and brand management, done properly.">
 <meta property="og:url" content="https://foxie.media/services">
 <meta property="og:image" content="https://foxie.media/og-image.png">
-<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Personal Branding &amp; Brand Management Services — Foxie Media">
+<meta name="twitter:description" content="Personal branding and brand management, done properly.">
+<meta name="twitter:image" content="https://foxie.media/og-image.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
 <link rel="stylesheet" href="/site.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://foxie.media/#organization",
+      "name": "Foxie Media",
+      "url": "https://foxie.media/",
+      "email": "varsha@foxie.media",
+      "telephone": "+917338178311",
+      "founder": { "@id": "https://foxie.media/#varsha" },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Foxie Media services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@id": "https://foxie.media/services#personal-branding" } },
+          { "@type": "Offer", "itemOffered": { "@id": "https://foxie.media/services#brand-management" } }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://foxie.media/#varsha",
+      "name": "Varsha Sangolli",
+      "jobTitle": "Founder"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://foxie.media/services#personal-branding",
+      "name": "Personal Branding",
+      "serviceType": "Personal branding",
+      "provider": { "@id": "https://foxie.media/#organization" },
+      "areaServed": { "@type": "Country", "name": "India" },
+      "url": "https://foxie.media/services",
+      "description": "Foxie Media personal branding turns a founder's ideas, expertise and personality into a brand people want to follow — positioning, content strategy, scriptwriting, creative direction, editing and growth reviews."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://foxie.media/services#brand-management",
+      "name": "Brand Management",
+      "serviceType": "Brand management",
+      "provider": { "@id": "https://foxie.media/#organization" },
+      "areaServed": { "@type": "Country", "name": "India" },
+      "url": "https://foxie.media/services",
+      "description": "Foxie Media brand management covers a brand's content presence end to end: strategy, ideation, calendars, creative direction, design, reels, video editing and social media management."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://foxie.media/" },
+        { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://foxie.media/services" }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <nav>
@@ -30,8 +96,9 @@
   <div class="panel-inner">
     <p class="kicker">WHAT WE DO</p>
     <h1>Two things. Done properly.</h1>
+    <p style="font-size:18px;max-width:640px;color:#c9c0b5;line-height:1.55">Foxie Media is a personal branding and brand management studio. Strategy comes first. Design, editing and AI creative are built into the work.</p>
     <div class="two" style="margin-top:48px">
-      <div class="box">
+      <div class="box" id="personal-branding">
         <div class="kicker">01</div>
         <h2>Personal Branding</h2>
         <p>Your ideas, expertise and personality, turned into a brand people want to follow. We shape the strategy, stories and content behind your personal brand, then help execute it consistently without making you sound like everyone else online.</p>
@@ -43,7 +110,7 @@
           <li>✦ Growth reviews &amp; optimisation</li>
         </ul>
       </div>
-      <div class="box">
+      <div class="box" id="brand-management">
         <div class="kicker">02</div>
         <h2>Brand Management</h2>
         <p>Your brand's content presence, managed end to end. From strategy and ideas to creative direction and execution, we build the systems and content that keep your brand relevant, recognisable and worth following.</p>
@@ -66,9 +133,18 @@
     <p style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#a09585;margin-top:48px">Not a traditional Social Media Marketing agency — strategy first, always.</p>
   </div>
 </section>
+<main class="page" style="padding-top:64px">
+  <div class="prose">
+    <h2>Who Foxie Media is for</h2>
+    <p>Foxie Media works with founders who need a personal brand, and with companies that need brand content managed end to end. The studio is led by Varsha Sangolli.</p>
+    <h2>How Foxie Media is different from a social media agency</h2>
+    <p>A typical social media marketing agency starts with posting. Foxie Media starts with positioning, voice and content pillars, then builds the system that produces the work — scripts, design, editing and reviews against what actually grows the audience.</p>
+  </div>
+</main>
 <footer>
   <a class="brand" href="/" style="color:#f6f4f1;font-size:16px">FOXIE<span class="star">*</span>MEDIA</a>
   <div class="foot-links">
+    <a href="/faq">FAQ</a>
     <a href="https://www.instagram.com/hey.varshh/">Instagram</a>
     <a href="https://www.linkedin.com/in/varsha-sangolli-177542349">LinkedIn</a>
     <a href="mailto:varsha@foxie.media">varsha@foxie.media</a>
