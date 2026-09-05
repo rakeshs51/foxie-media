@@ -197,8 +197,15 @@ a:hover { color: #ff4328; }
 .bts-shot { position: relative; aspect-ratio: 4/5; border-radius: 18px; overflow: hidden; background: #efeae3; }
 .bts-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bts-scrim { position: absolute; inset: auto 0 0 0; padding: 20px; background: linear-gradient(to top, rgba(12,9,7,.82), rgba(12,9,7,.42) 55%, rgba(12,9,7,0)); }
-.bts-num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #ff8a70; margin: 0 0 6px; }
 .bts-title { font-family: 'Archivo Black', sans-serif; font-size: 20px; line-height: 1.15; letter-spacing: -0.5px; color: #fff; margin: 0; text-wrap: pretty; }
+/* Selected work: one moving row */
+.work-marquee { overflow: hidden; padding: 4px 0; }
+.work-track { display: flex; width: max-content; animation: marquee 85s linear infinite; }
+.work-group { display: flex; flex-shrink: 0; gap: 20px; padding-right: 20px; align-items: stretch; }
+.work-card { width: 340px; flex-shrink: 0; text-decoration: none; color: #1a1512; background: #fff; border: 1px solid #e4dfd8; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.work-marquee:hover .work-track, .work-marquee:focus-within .work-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .work-track { animation: none; } }
+@media (max-width: 620px) { .work-card { width: 285px; } }
 /* Video reel strip */
 .reel-marquee { overflow: hidden; padding: 4px 0; }
 .reel-track { display: flex; width: max-content; animation: marquee 100s linear infinite; }
@@ -206,6 +213,12 @@ a:hover { color: #ff4328; }
 .reel-card { width: clamp(150px, 15vw, 210px); aspect-ratio: 9/16; border-radius: 18px; overflow: hidden; flex-shrink: 0; background: #efeae3; }
 .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .reel-marquee:hover .reel-track { animation-play-state: paused; }
+@keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.reel-track.is-reverse { animation-name: marquee-reverse; animation-duration: 130s; }
+/* AI strip: clips are a mix of 9:16 and 16:9, so cards share a height and
+   keep their own width rather than cropping landscape into a vertical frame. */
+.ai-card { height: clamp(210px, 24vw, 300px); border-radius: 18px; overflow: hidden; flex-shrink: 0; background: #2a2320; }
+.ai-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (prefers-reduced-motion: reduce) { .reel-track { animation: none; } }
 </style>
 </helmet>
@@ -223,7 +236,7 @@ a:hover { color: #ff4328; }
   </nav>
 
   <!-- Hero -->
-  <header style="padding: clamp(60px, 10vw, 110px) clamp(20px, 5vw, 48px) 80px; max-width: 1200px; margin: 0 auto">
+  <header style="padding: clamp(60px, 10vw, 110px) clamp(20px, 5vw, 48px) clamp(36px, 5vw, 56px); max-width: 1200px; margin: 0 auto">
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #ff4328; margin: 0 0 24px; letter-spacing: 1px">BRAND MANAGEMENT × PERSONAL BRANDING</p>
     <h1 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.02; margin: 0 0 32px; letter-spacing: -2px; text-wrap: pretty">We make <span style="color: #ff4328">brands</span> &amp; <span style="color: #ff4328">founders</span> impossible to ignore.</h1>
     <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap">
@@ -231,6 +244,28 @@ a:hover { color: #ff4328; }
       <a href="mailto:varsha@foxie.media" style="text-decoration: none; background: #1a1512; color: #f6f4f1; padding: 18px 34px; border-radius: 999px; font-size: 17px; font-weight: 600; white-space: nowrap" style-hover="background: #ff4328; color: #f6f4f1">Work with us →</a>
     </div>
   </header>
+
+  <!-- Client video reel: sits directly under the hero, Halcyon-style -->
+  <section id="reel" style="padding: 0 0 clamp(48px, 7vw, 80px)" aria-label="The work, in motion">
+    <div class="reel-marquee">
+      <div class="reel-track">
+        <div class="reel-group">
+          <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
+            <div class="reel-card">
+              <video src="{{ v.src }}" data-poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback aria-label="Client content reel"></video>
+            </div>
+          </sc-for>
+        </div>
+        <div class="reel-group" aria-hidden="true">
+          <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
+            <div class="reel-card">
+              <video src="{{ v.src }}" data-poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback></video>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Client logo strip -->
   <div class="logo-marquee">
@@ -249,30 +284,58 @@ a:hover { color: #ff4328; }
   </div>
 
   <!-- Work / clients -->
-  <section id="work" style="padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px); max-width: 1200px; margin: 0 auto">
-    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px">Selected work</h2>
-    <p style="font-size: 18px; color: #4a423b; margin: 0 0 48px; max-width: 560px">Personal brands and companies, built with strategy and executed properly.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 20px">
-      <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
-        <a href="{{ c.link }}" target="_blank" rel="noopener" style="text-decoration: none; color: #1a1512; background: #fff; border: 1px solid #e4dfd8; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column" style-hover="border-color: #ff4328">
-          <div style="aspect-ratio: 4/3; background: #efeae3; position: relative; overflow: hidden">
-            <img src="{{ c.img }}" alt="{{ c.name }}" style="{{ c.imgStyle }}">
-          </div>
-          <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
-              <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
-              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #a09585; white-space: nowrap">{{ c.followers }}</span>
-            </div>
-            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #ff4328; letter-spacing: 0.6px; margin-top: 6px">{{ c.kind }}</div>
-            <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 14px 0 0">{{ c.body }}</p>
-            <sc-if value="{{ c.result }}">
-              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; margin-top: 14px">{{ c.result }}</div>
-            </sc-if>
-            <div style="font-size: 13px; color: #a09585; margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
-            <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
-          </div>
-        </a>
-      </sc-for>
+  <section id="work" style="padding: clamp(60px, 9vw, 100px) 0">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) 48px">
+      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px">Selected work</h2>
+      <p style="font-size: 18px; color: #4a423b; margin: 0; max-width: 560px">Personal brands and companies, built with strategy and executed properly.</p>
+    </div>
+    <div class="work-marquee">
+      <div class="work-track">
+        <div class="work-group">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
+            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" style-hover="border-color: #ff4328">
+              <div style="aspect-ratio: 4/3; background: #efeae3; position: relative; overflow: hidden">
+                <img src="{{ c.img }}" alt="{{ c.name }}" style="{{ c.imgStyle }}">
+              </div>
+              <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+                  <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #a09585; white-space: nowrap">{{ c.followers }}</span>
+                </div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #ff4328; letter-spacing: 0.6px; margin-top: 6px">{{ c.kind }}</div>
+                <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 14px 0 0">{{ c.body }}</p>
+                <sc-if value="{{ c.result }}">
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; margin-top: 14px">{{ c.result }}</div>
+                </sc-if>
+                <div style="font-size: 13px; color: #a09585; margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
+                <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+        <div class="work-group" aria-hidden="true">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
+            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" tabindex="-1" style-hover="border-color: #ff4328">
+              <div style="aspect-ratio: 4/3; background: #efeae3; position: relative; overflow: hidden">
+                <img src="{{ c.img }}" alt="" style="{{ c.imgStyle }}">
+              </div>
+              <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+                  <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #a09585; white-space: nowrap">{{ c.followers }}</span>
+                </div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #ff4328; letter-spacing: 0.6px; margin-top: 6px">{{ c.kind }}</div>
+                <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 14px 0 0">{{ c.body }}</p>
+                <sc-if value="{{ c.result }}">
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; margin-top: 14px">{{ c.result }}</div>
+                </sc-if>
+                <div style="font-size: 13px; color: #a09585; margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
+                <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -287,40 +350,12 @@ a:hover { color: #ff4328; }
           <div class="bts-shot">
             <img src="{{ b.img }}" alt="{{ b.alt }}" decoding="async">
             <div class="bts-scrim">
-              <p class="bts-num">{{ b.num }}</p>
               <p class="bts-title">{{ b.title }}</p>
             </div>
           </div>
           <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 18px 0 0">{{ b.body }}</p>
         </div>
       </sc-for>
-    </div>
-  </section>
-
-  <!-- Client video reel -->
-  <section id="reel" style="padding: 0 0 clamp(60px, 9vw, 100px)">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) 36px">
-      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">THE WORK, IN MOTION</p>
-      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px; max-width: 820px; text-wrap: pretty">Content we've made for founders and brands.</h2>
-      <p style="font-size: 18px; color: #4a423b; margin: 0; max-width: 620px">Scripted, shot, edited and published by us.</p>
-    </div>
-    <div class="reel-marquee">
-      <div class="reel-track">
-        <div class="reel-group">
-          <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
-            <div class="reel-card">
-              <video src="{{ v.src }}" poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback aria-label="Client content reel"></video>
-            </div>
-          </sc-for>
-        </div>
-        <div class="reel-group" aria-hidden="true">
-          <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
-            <div class="reel-card">
-              <video src="{{ v.src }}" poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback></video>
-            </div>
-          </sc-for>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -400,47 +435,38 @@ a:hover { color: #ff4328; }
   </section>
 
   <!-- AI creative -->
-  <section id="ai" style="background: #1a1512; color: #f6f4f1; padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px)">
-    <div style="max-width: 1200px; margin: 0 auto">
+  <section id="ai" style="background: #1a1512; color: #f6f4f1; padding: clamp(60px, 9vw, 100px) 0">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px)">
       <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">WE ALSO MAKE WEIRD THINGS POSSIBLE</p>
       <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 16px; max-width: 820px; text-wrap: pretty">AI, when the idea calls for it.</h2>
       <p style="font-size: 18px; line-height: 1.55; margin: 0; max-width: 620px; color: #d8cfc4">Not because everything needs AI. Because some ideas are better when there are fewer production limits.</p>
       <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #a09585; margin: 36px 0 0">AI Video · Product Visuals · Animation · Experimental Content</p>
-      <a href="#reel" style="text-decoration: none; display: inline-block; margin-top: 28px; background: #ff4328; color: #f6f4f1; padding: 16px 30px; border-radius: 999px; font-size: 16px; font-weight: 600" style-hover="background: #f6f4f1; color: #1a1512">See what we've made →</a>
+    </div>
+    <div class="reel-marquee" style="margin-top: clamp(36px, 5vw, 52px)">
+      <div class="reel-track is-reverse">
+        <div class="reel-group">
+          <sc-for list="{{ aiClips }}" as="v" hint-placeholder-count="19">
+            <div class="ai-card" style="{{ v.boxStyle }}">
+              <video src="{{ v.src }}" data-poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback aria-label="AI content reel"></video>
+            </div>
+          </sc-for>
+        </div>
+        <div class="reel-group" aria-hidden="true">
+          <sc-for list="{{ aiClips }}" as="v" hint-placeholder-count="19">
+            <div class="ai-card" style="{{ v.boxStyle }}">
+              <video src="{{ v.src }}" data-poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback></video>
+            </div>
+          </sc-for>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Founder line -->
-  <section id="about" style="padding: 0 clamp(20px, 5vw, 48px) clamp(60px, 9vw, 100px); max-width: 900px; margin: 0 auto; text-align: center">
+  <section id="about" style="padding: clamp(64px, 9vw, 104px) clamp(20px, 5vw, 48px); max-width: 900px; margin: 0 auto; text-align: center">
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">LED BY VARSHA SANGOLLI</p>
     <p style="font-size: clamp(20px, 2.6vw, 26px); line-height: 1.45; font-weight: 500; letter-spacing: -0.4px; margin: 0; text-wrap: pretty">"I built Foxie to be the kind of creative partner I felt brands and founders actually needed, one that understands the internet, thinks strategically, cares about the idea, and can execute it properly."</p>
     <p style="font-size: 16px; line-height: 1.6; color: #4a423b; max-width: 640px; margin: 28px auto 0">The studio is not a traditional social media marketing agency — strategy first, then design, editing and AI creative.</p>
-  </section>
-
-  <!-- FAQ for answer engines -->
-  <section id="faq" style="padding: 0 clamp(20px, 5vw, 48px) clamp(60px, 9vw, 100px); max-width: 800px; margin: 0 auto">
-    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 48px); letter-spacing: -1.5px; margin: 0 0 12px">Questions, answered</h2>
-    <p style="font-size: 16px; color: #4a423b; margin: 0 0 32px">What Foxie Media is, who runs it, and how to get in touch.</p>
-    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
-      <h3 style="font-size: 18px; margin: 0 0 10px">What is Foxie Media?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Foxie Media is a personal branding and brand management studio. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
-    </div>
-    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
-      <h3 style="font-size: 18px; margin: 0 0 10px">What does Foxie Media do?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Foxie Media offers two core services: personal branding for founders and brand management for companies. Design, editing and AI creative are built into the work. Strategy comes first, then execution.</p>
-    </div>
-    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
-      <h3 style="font-size: 18px; margin: 0 0 10px">Is Foxie Media a social media marketing agency?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">No. Foxie Media is not a traditional social media marketing agency. It is a strategy-first personal branding and brand management studio.</p>
-    </div>
-    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
-      <h3 style="font-size: 18px; margin: 0 0 10px">Who has Foxie Media worked with?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Selected work includes Toolandtea, Swishy AI, Mugdha Bhagchandka, LifeAt, Sindhu Biswal, Naiyya Saggi and Mihika. Results include Toolandtea growing from 0 to 10K Instagram followers in 30 days, Swishy AI from 0 to 15K in 30 days, and Mugdha Bhagchandka from 5K to 10K in 30 days.</p>
-    </div>
-    <div style="border-top: 1px solid #e4dfd8; border-bottom: 1px solid #e4dfd8; padding: 22px 0">
-      <h3 style="font-size: 18px; margin: 0 0 10px">How do I contact Foxie Media?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Email <a href="mailto:varsha@foxie.media">varsha@foxie.media</a> or call <a href="tel:+917338178311">+91 73381 78311</a>.</p>
-    </div>
   </section>
 
   <!-- CTA + footer -->
@@ -498,15 +524,31 @@ class Component extends DCLogic {
       { n: "3", title: "Learn what works. Then do more of it.", body: "We don't post and disappear. We review performance, watch what people respond to, test new ideas and continuously refine the strategy around what is actually driving attention, engagement and growth.", out: "Reach · Watch time · Saves · Shares · Engagement · Audience growth" },
     ];
     const bts = [
-      { num: "CARD 01", title: "Strategy before posting", body: "We figure out what you should say, how you should say it, and what your audience should remember you for.", img: "assets/bts-2.jpg", alt: "Planning a content shoot at the desk" },
-      { num: "CARD 02", title: "One idea. More mileage.", body: "We turn strong ideas into reels, carousels, stories and repeatable formats instead of chasing content every week.", img: "assets/bts-1.jpg", alt: "Camera bodies and lenses laid out on a studio table before a shoot" },
-      { num: "CARD 03", title: "From idea to published", body: "Strategy, scripting, creative direction, editing and social execution — all handled by one team.", img: "assets/bts-3.jpg", alt: "The Foxie Media team filming on set" },
+      { title: "Strategy before posting", body: "We figure out what you should say, how you should say it, and what your audience should remember you for.", img: "assets/bts-2.jpg", alt: "Planning a content shoot at the desk" },
+      { title: "One idea. More mileage.", body: "We turn strong ideas into reels, carousels, stories and repeatable formats instead of chasing content every week.", img: "assets/bts-1.jpg", alt: "Camera bodies and lenses laid out on a studio table before a shoot" },
+      { title: "From idea to published", body: "Strategy, scripting, creative direction, editing and social execution — all handled by one team.", img: "assets/bts-3.jpg", alt: "The Foxie Media team filming on set" },
     ];
     const clips = Array.from({ length: 14 }, (_, i) => {
       const nn = String(i + 1).padStart(2, "0");
       return { src: `assets/video/clip-${nn}.mp4`, poster: `assets/video/clip-${nn}.jpg` };
     });
-    return { clients, logos, steps, bts, clips };
+    // AI clips are a mix of 16:9 and 9:16, so each card carries its own
+    // aspect ratio instead of cropping everything into one shape.
+    const aiSizes = [
+      [1066, 600], [1066, 600], [338, 600], [338, 600], [1066, 600],
+      [1066, 600], [338, 600], [338, 600], [338, 600], [338, 600],
+      [1066, 600], [338, 600], [1066, 600], [1066, 600], [1066, 600],
+      [1066, 600], [334, 600], [1066, 600], [1066, 600],
+    ];
+    const aiClips = aiSizes.map(([w, h], i) => {
+      const nn = String(i + 1).padStart(2, "0");
+      return {
+        src: `assets/video-ai/ai-${nn}.mp4`,
+        poster: `assets/video-ai/ai-${nn}.jpg`,
+        boxStyle: `aspect-ratio: ${w} / ${h}`,
+      };
+    });
+    return { clients, logos, steps, bts, clips, aiClips };
   }
 }
 </script>
@@ -514,6 +556,17 @@ class Component extends DCLogic {
 // Reel strip: nothing downloads until a card scrolls into view, and offscreen
 // clips are paused so only a handful of decoders are ever active.
 (function () {
+  // Wider margin: attach the poster just before a card scrolls in, so the
+  // 33 poster frames aren't all fetched on first paint.
+  var posterIo = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var v = e.target;
+      if (v.dataset.poster) { v.poster = v.dataset.poster; delete v.dataset.poster; }
+      posterIo.unobserve(v);
+    });
+  }, { rootMargin: '400px' });
+
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       var v = e.target;
@@ -527,7 +580,7 @@ class Component extends DCLogic {
   var queued = false;
   function scan() {
     queued = false;
-    var vids = document.querySelectorAll('.reel-card video:not([data-reel])');
+    var vids = document.querySelectorAll('.reel-card video:not([data-reel]), .ai-card video:not([data-reel])');
     Array.prototype.forEach.call(vids, function (v) {
       v.dataset.reel = '1';
       // The renderer drops the `muted` and `loop` attributes, so set them as
@@ -535,6 +588,7 @@ class Component extends DCLogic {
       v.muted = true;
       v.defaultMuted = true;
       v.loop = true;
+      posterIo.observe(v);
       io.observe(v);
     });
   }
@@ -555,7 +609,7 @@ class Component extends DCLogic {
   var tries = 0;
   var poll = setInterval(function () {
     queueScan();
-    if (++tries > 40 || document.querySelector('.reel-card video[data-reel]')) clearInterval(poll);
+    if (++tries > 40 || document.querySelector('.ai-card video[data-reel]')) clearInterval(poll);
   }, 250);
 })();
 </script>
