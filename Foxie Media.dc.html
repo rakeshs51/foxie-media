@@ -117,7 +117,7 @@
           "name": "What is Foxie Media?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content."
+            "text": "Foxie Media is a personal branding and brand management studio. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content."
           }
         },
         {
@@ -191,6 +191,22 @@ a:hover { color: #ff4328; }
 @media (prefers-reduced-motion: reduce) { .logo-track { animation: none; } }
 @media (max-width: 620px) { a[data-navlink] { display: none; } }
 .seo-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+/* Behind the scenes */
+.bts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px; }
+.bts-card { display: flex; flex-direction: column; }
+.bts-shot { position: relative; aspect-ratio: 4/5; border-radius: 18px; overflow: hidden; background: #efeae3; }
+.bts-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bts-scrim { position: absolute; inset: auto 0 0 0; padding: 20px; background: linear-gradient(to top, rgba(12,9,7,.82), rgba(12,9,7,.42) 55%, rgba(12,9,7,0)); }
+.bts-num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; color: #ff8a70; margin: 0 0 6px; }
+.bts-title { font-family: 'Archivo Black', sans-serif; font-size: 20px; line-height: 1.15; letter-spacing: -0.5px; color: #fff; margin: 0; text-wrap: pretty; }
+/* Video reel strip */
+.reel-marquee { overflow: hidden; padding: 4px 0; }
+.reel-track { display: flex; width: max-content; animation: marquee 100s linear infinite; }
+.reel-group { display: flex; flex-shrink: 0; gap: 16px; padding-right: 16px; }
+.reel-card { width: clamp(150px, 15vw, 210px); aspect-ratio: 9/16; border-radius: 18px; overflow: hidden; flex-shrink: 0; background: #efeae3; }
+.reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reel-marquee:hover .reel-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .reel-track { animation: none; } }
 </style>
 </helmet>
 <div style="font-family: 'Archivo', sans-serif; color: #1a1512; background: #f6f4f1; min-width: 320px">
@@ -211,7 +227,7 @@ a:hover { color: #ff4328; }
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #ff4328; margin: 0 0 24px; letter-spacing: 1px">BRAND MANAGEMENT × PERSONAL BRANDING</p>
     <h1 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.02; margin: 0 0 32px; letter-spacing: -2px; text-wrap: pretty">We make <span style="color: #ff4328">brands</span> &amp; <span style="color: #ff4328">founders</span> impossible to ignore.</h1>
     <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap">
-      <p style="font-size: 20px; line-height: 1.55; max-width: 580px; margin: 0; color: #4a423b">Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. We help ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
+      <p style="font-size: 20px; line-height: 1.55; max-width: 580px; margin: 0; color: #4a423b">Foxie Media is a personal branding and brand management studio. We help ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
       <a href="mailto:varsha@foxie.media" style="text-decoration: none; background: #1a1512; color: #f6f4f1; padding: 18px 34px; border-radius: 999px; font-size: 17px; font-weight: 600; white-space: nowrap" style-hover="background: #ff4328; color: #f6f4f1">Work with us →</a>
     </div>
   </header>
@@ -257,6 +273,54 @@ a:hover { color: #ff4328; }
           </div>
         </a>
       </sc-for>
+    </div>
+  </section>
+
+  <!-- Behind the scenes -->
+  <section id="behind-the-scenes" style="padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px); max-width: 1200px; margin: 0 auto">
+    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">FOXIE, BEHIND THE SCENES</p>
+    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px; max-width: 820px; text-wrap: pretty">Your content team, without building one.</h2>
+    <p style="font-size: 18px; color: #4a423b; margin: 0 0 48px; max-width: 620px">Strategy, ideas, scripts, design, editing and optimisation — handled as one system, so you can focus on building the brand.</p>
+    <div class="bts-grid">
+      <sc-for list="{{ bts }}" as="b" hint-placeholder-count="3">
+        <div class="bts-card">
+          <div class="bts-shot">
+            <img src="{{ b.img }}" alt="{{ b.alt }}" decoding="async">
+            <div class="bts-scrim">
+              <p class="bts-num">{{ b.num }}</p>
+              <p class="bts-title">{{ b.title }}</p>
+            </div>
+          </div>
+          <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 18px 0 0">{{ b.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- Client video reel -->
+  <section id="reel" style="padding: 0 0 clamp(60px, 9vw, 100px)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) 36px">
+      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">THE WORK, IN MOTION</p>
+      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px; max-width: 820px; text-wrap: pretty">Content we've made for founders and brands.</h2>
+      <p style="font-size: 18px; color: #4a423b; margin: 0; max-width: 620px">Scripted, shot, edited and published by us.</p>
+    </div>
+    <div class="reel-marquee">
+      <div class="reel-track">
+        <div class="reel-group">
+          <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
+            <div class="reel-card">
+              <video src="{{ v.src }}" poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback aria-label="Client content reel"></video>
+            </div>
+          </sc-for>
+        </div>
+        <div class="reel-group" aria-hidden="true">
+          <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
+            <div class="reel-card">
+              <video src="{{ v.src }}" poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback></video>
+            </div>
+          </sc-for>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -335,11 +399,22 @@ a:hover { color: #ff4328; }
     </div>
   </section>
 
+  <!-- AI creative -->
+  <section id="ai" style="background: #1a1512; color: #f6f4f1; padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px)">
+    <div style="max-width: 1200px; margin: 0 auto">
+      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">WE ALSO MAKE WEIRD THINGS POSSIBLE</p>
+      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 16px; max-width: 820px; text-wrap: pretty">AI, when the idea calls for it.</h2>
+      <p style="font-size: 18px; line-height: 1.55; margin: 0; max-width: 620px; color: #d8cfc4">Not because everything needs AI. Because some ideas are better when there are fewer production limits.</p>
+      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #a09585; margin: 36px 0 0">AI Video · Product Visuals · Animation · Experimental Content</p>
+      <a href="#reel" style="text-decoration: none; display: inline-block; margin-top: 28px; background: #ff4328; color: #f6f4f1; padding: 16px 30px; border-radius: 999px; font-size: 16px; font-weight: 600" style-hover="background: #f6f4f1; color: #1a1512">See what we've made →</a>
+    </div>
+  </section>
+
   <!-- Founder line -->
   <section id="about" style="padding: 0 clamp(20px, 5vw, 48px) clamp(60px, 9vw, 100px); max-width: 900px; margin: 0 auto; text-align: center">
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">LED BY VARSHA SANGOLLI</p>
     <p style="font-size: clamp(20px, 2.6vw, 26px); line-height: 1.45; font-weight: 500; letter-spacing: -0.4px; margin: 0; text-wrap: pretty">"I built Foxie to be the kind of creative partner I felt brands and founders actually needed, one that understands the internet, thinks strategically, cares about the idea, and can execute it properly."</p>
-    <p style="font-size: 16px; line-height: 1.6; color: #4a423b; max-width: 640px; margin: 28px auto 0">Varsha Sangolli is the founder of Foxie Media. The studio is not a traditional social media marketing agency — strategy first, then design, editing and AI creative.</p>
+    <p style="font-size: 16px; line-height: 1.6; color: #4a423b; max-width: 640px; margin: 28px auto 0">The studio is not a traditional social media marketing agency — strategy first, then design, editing and AI creative.</p>
   </section>
 
   <!-- FAQ for answer engines -->
@@ -348,11 +423,7 @@ a:hover { color: #ff4328; }
     <p style="font-size: 16px; color: #4a423b; margin: 0 0 32px">What Foxie Media is, who runs it, and how to get in touch.</p>
     <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
       <h3 style="font-size: 18px; margin: 0 0 10px">What is Foxie Media?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Foxie Media is a personal branding and brand management studio founded by Varsha Sangolli. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
-    </div>
-    <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
-      <h3 style="font-size: 18px; margin: 0 0 10px">Who founded Foxie Media?</h3>
-      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Varsha Sangolli founded Foxie Media to be a creative partner for brands and founders that understands the internet, thinks strategically, cares about the idea, and can execute content properly.</p>
+      <p style="margin: 0; color: #4a423b; line-height: 1.6; font-size: 16px">Foxie Media is a personal branding and brand management studio. It helps ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
     </div>
     <div style="border-top: 1px solid #e4dfd8; padding: 22px 0">
       <h3 style="font-size: 18px; margin: 0 0 10px">What does Foxie Media do?</h3>
@@ -377,7 +448,6 @@ a:hover { color: #ff4328; }
     <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(36px, 6vw, 72px); letter-spacing: -2px; margin: 0 0 24px; text-wrap: pretty">Ready to build a brand people remember?</h2>
     <p style="font-size: 18px; margin: 0 0 40px; opacity: 0.9; max-width: 560px; margin-left: auto; margin-right: auto">Tell us what you're building, where you want to go, and we'll figure out how Foxie can help.</p>
     <a href="mailto:varsha@foxie.media" style="text-decoration: none; display: inline-block; background: #1a1512; color: #f6f4f1; padding: 20px 44px; border-radius: 999px; font-size: 18px; font-weight: 600" style-hover="background: #f6f4f1; color: #ff4328">Start a project →</a>
-    <p style="margin: 24px 0 0; font-size: 16px"><a href="tel:+917338178311" style="color: #f6f4f1; text-decoration: none">+91 73381 78311</a></p>
   </section>
   <footer style="background: #1a1512; color: #a09585; padding: 32px clamp(20px, 5vw, 48px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px">
     <div style="font-family: 'Archivo Black', sans-serif; color: #f6f4f1; font-size: 16px">FOXIE<span style="color: #ff4328">*</span>MEDIA</div>
@@ -427,9 +497,67 @@ class Component extends DCLogic {
       { n: "2", title: "Turn strategy into content", body: "Ideas are only useful when they get made well. We handle the system behind the content — ideation, calendars, scripting, design, editing and creative direction — so every piece feels intentional and recognisably yours.", out: "Ideas · Scripts · Reels · Carousels · Editing · Content calendar" },
       { n: "3", title: "Learn what works. Then do more of it.", body: "We don't post and disappear. We review performance, watch what people respond to, test new ideas and continuously refine the strategy around what is actually driving attention, engagement and growth.", out: "Reach · Watch time · Saves · Shares · Engagement · Audience growth" },
     ];
-    return { clients, logos, steps };
+    const bts = [
+      { num: "CARD 01", title: "Strategy before posting", body: "We figure out what you should say, how you should say it, and what your audience should remember you for.", img: "assets/bts-2.jpg", alt: "Planning a content shoot at the desk" },
+      { num: "CARD 02", title: "One idea. More mileage.", body: "We turn strong ideas into reels, carousels, stories and repeatable formats instead of chasing content every week.", img: "assets/bts-1.jpg", alt: "Camera bodies and lenses laid out on a studio table before a shoot" },
+      { num: "CARD 03", title: "From idea to published", body: "Strategy, scripting, creative direction, editing and social execution — all handled by one team.", img: "assets/bts-3.jpg", alt: "The Foxie Media team filming on set" },
+    ];
+    const clips = Array.from({ length: 14 }, (_, i) => {
+      const nn = String(i + 1).padStart(2, "0");
+      return { src: `assets/video/clip-${nn}.mp4`, poster: `assets/video/clip-${nn}.jpg` };
+    });
+    return { clients, logos, steps, bts, clips };
   }
 }
+</script>
+<script>
+// Reel strip: nothing downloads until a card scrolls into view, and offscreen
+// clips are paused so only a handful of decoders are ever active.
+(function () {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      else { v.pause(); }
+    });
+  }, { rootMargin: '100px' });
+
+  // The page is rendered client-side and the reel can be re-rendered, which
+  // swaps in fresh <video> nodes. Keep rescanning rather than running once.
+  var queued = false;
+  function scan() {
+    queued = false;
+    var vids = document.querySelectorAll('.reel-card video:not([data-reel])');
+    Array.prototype.forEach.call(vids, function (v) {
+      v.dataset.reel = '1';
+      // The renderer drops the `muted` and `loop` attributes, so set them as
+      // properties. Without muted, browsers refuse to autoplay at all.
+      v.muted = true;
+      v.defaultMuted = true;
+      v.loop = true;
+      io.observe(v);
+    });
+  }
+  function queueScan() {
+    if (queued) return;
+    queued = true;
+    // setTimeout rather than requestAnimationFrame: rAF never fires while the
+    // tab is hidden, which would leave the reel uninitialised in a background tab.
+    setTimeout(scan, 0);
+  }
+  queueScan();
+  // Observe documentElement, not body: the renderer can swap the <body> node
+  // itself, and an observer bound to the old body would never see the render.
+  new MutationObserver(queueScan).observe(document.documentElement, { childList: true, subtree: true });
+  document.addEventListener('DOMContentLoaded', queueScan);
+  window.addEventListener('load', queueScan);
+  // Safety net for the same race, in case the render lands between events.
+  var tries = 0;
+  var poll = setInterval(function () {
+    queueScan();
+    if (++tries > 40 || document.querySelector('.reel-card video[data-reel]')) clearInterval(poll);
+  }, 250);
+})();
 </script>
 </body>
 </html>
