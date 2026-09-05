@@ -228,7 +228,7 @@ a:hover { color: #ff4328; }
 .reel-card { width: clamp(150px, 15vw, 210px); aspect-ratio: 9/16; border-radius: 18px; overflow: hidden; flex-shrink: 0; background: #efeae3; }
 .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
 @keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.reel-track.is-reverse { animation-name: marquee-reverse; animation-duration: 130s; }
+.reel-track.is-reverse { animation-name: marquee-reverse; animation-duration: 78s; }
 /* AI strip: clips are a mix of 9:16 and 16:9, so cards share a height and
    keep their own width rather than cropping landscape into a vertical frame. */
 .ai-card { height: clamp(210px, 24vw, 300px); border-radius: 18px; overflow: hidden; flex-shrink: 0; background: #2a2320; }
@@ -524,14 +524,17 @@ class Component extends DCLogic {
     });
     // AI clips are a mix of 16:9 and 9:16, so each card carries its own
     // aspect ratio instead of cropping everything into one shape.
-    const aiSizes = [
-      [1066, 600], [1066, 600], [338, 600], [338, 600], [1066, 600],
-      [1066, 600], [338, 600], [338, 600], [338, 600], [338, 600],
-      [1066, 600], [338, 600], [1066, 600], [1066, 600], [1066, 600],
-      [1066, 600], [334, 600], [1066, 600], [1066, 600],
+    // Tata Coffee Grand (14) leads; the rest follow in folder order.
+    const aiOrder = [
+      [14, 1066, 600],
+      [1, 1066, 600], [2, 1066, 600], [3, 338, 600], [4, 338, 600],
+      [5, 1066, 600], [6, 1066, 600], [7, 338, 600], [8, 338, 600],
+      [9, 338, 600], [10, 338, 600], [11, 1066, 600], [12, 338, 600],
+      [13, 1066, 600], [15, 1066, 600], [16, 1066, 600], [17, 334, 600],
+      [18, 1066, 600], [19, 1066, 600],
     ];
-    const aiClips = aiSizes.map(([w, h], i) => {
-      const nn = String(i + 1).padStart(2, "0");
+    const aiClips = aiOrder.map(([n, w, h]) => {
+      const nn = String(n).padStart(2, "0");
       return {
         src: `assets/video-ai/ai-${nn}.mp4`,
         poster: `assets/video-ai/ai-${nn}.jpg`,
