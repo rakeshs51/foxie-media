@@ -181,30 +181,45 @@ body { margin: 0; background: #f6f4f1; }
 a { color: #1a1512; }
 a:hover { color: #ff4328; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.logo-marquee { overflow: hidden; border-top: 1px solid #e4dfd8; border-bottom: 1px solid #e4dfd8; background: #fff; padding: 32px 0; }
-.logo-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
-.logo-group { display: flex; align-items: center; flex-shrink: 0; gap: 64px; padding-right: 64px; }
-.logo-chip { height: 88px; border-radius: 16px; overflow: hidden; flex-shrink: 0; }
-.logo-chip img { height: 88px; width: auto; display: block; }
-.logo-chip.is-plain { border-radius: 0; overflow: visible; }
-.logo-chip.is-plain img { height: 96px; }
-@media (prefers-reduced-motion: reduce) { .logo-track { animation: none; } }
+/* Client logos: a quiet credibility bar, not a section competing for attention */
+.logo-bar { border-top: 1px solid #e4dfd8; border-bottom: 1px solid #e4dfd8; background: #fff; padding: 40px clamp(20px, 5vw, 48px); text-align: center; }
+.logo-bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1.4px; color: #a09585; margin: 0 0 26px; }
+.logo-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(20px, 3.4vw, 44px); max-width: 1100px; margin: 0 auto; }
+.logo-chip { height: 52px; border-radius: 10px; overflow: hidden; flex-shrink: 0; filter: grayscale(1); opacity: .55; transition: filter .25s ease, opacity .25s ease; }
+.logo-chip img { height: 52px; width: auto; display: block; }
+.logo-chip:hover { filter: grayscale(0); opacity: 1; }
+@media (max-width: 620px) { .logo-chip, .logo-chip img { height: 42px; } }
 @media (max-width: 620px) { a[data-navlink] { display: none; } }
 .seo-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 /* Behind the scenes */
 .bts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px; }
 .bts-card { display: flex; flex-direction: column; }
+/* On narrow screens these become a swipeable row rather than a tall stack */
+@media (max-width: 760px) {
+  .bts-grid {
+    display: flex; grid-template-columns: none; gap: 16px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; -ms-overflow-style: none;
+    overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+    margin: 0 calc(-1 * clamp(20px, 5vw, 48px));
+    padding: 0 clamp(20px, 5vw, 48px) 4px;
+  }
+  .bts-grid::-webkit-scrollbar { display: none; }
+  .bts-card { flex: 0 0 78%; scroll-snap-align: start; }
+}
 .bts-shot { position: relative; aspect-ratio: 4/5; border-radius: 18px; overflow: hidden; background: #efeae3; }
 .bts-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bts-scrim { position: absolute; inset: auto 0 0 0; padding: 20px; background: linear-gradient(to top, rgba(12,9,7,.82), rgba(12,9,7,.42) 55%, rgba(12,9,7,0)); }
 .bts-title { font-family: 'Archivo Black', sans-serif; font-size: 20px; line-height: 1.15; letter-spacing: -0.5px; color: #fff; margin: 0; text-wrap: pretty; }
-/* Selected work: one moving row */
-.work-marquee { overflow: hidden; padding: 4px 0; }
-.work-track { display: flex; width: max-content; animation: marquee 85s linear infinite; }
+/* Selected work: drifts on its own, and can be dragged / swiped / scrolled */
+.work-marquee { overflow-x: auto; overflow-y: hidden; padding: 4px 0; cursor: grab; scrollbar-width: none; -ms-overflow-style: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+.work-marquee::-webkit-scrollbar { display: none; }
+.work-marquee.is-dragging { cursor: grabbing; }
+.work-marquee.is-dragging .work-card { user-select: none; }
+.work-track { display: flex; width: max-content; }
 .work-group { display: flex; flex-shrink: 0; gap: 20px; padding-right: 20px; align-items: stretch; }
 .work-card { width: 340px; flex-shrink: 0; text-decoration: none; color: #1a1512; background: #fff; border: 1px solid #e4dfd8; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
-.work-marquee:hover .work-track, .work-marquee:focus-within .work-track { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) { .work-track { animation: none; } }
+.work-card img { pointer-events: none; }
 @media (max-width: 620px) { .work-card { width: 285px; } }
 /* Video reel strip */
 .reel-marquee { overflow: hidden; padding: 4px 0; }
@@ -267,22 +282,6 @@ a:hover { color: #ff4328; }
     </div>
   </section>
 
-  <!-- Client logo strip -->
-  <div class="logo-marquee">
-    <div class="logo-track">
-      <div class="logo-group">
-        <sc-for list="{{ logos }}" as="l" hint-placeholder-count="14">
-          <div class="{{ l.cls }}"><img src="{{ l.src }}" alt="{{ l.name }}"></div>
-        </sc-for>
-      </div>
-      <div class="logo-group" aria-hidden="true">
-        <sc-for list="{{ logos }}" as="l" hint-placeholder-count="14">
-          <div class="{{ l.cls }}"><img src="{{ l.src }}" alt=""></div>
-        </sc-for>
-      </div>
-    </div>
-  </div>
-
   <!-- Work / clients -->
   <section id="work" style="padding: clamp(60px, 9vw, 100px) 0">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) 48px">
@@ -336,26 +335,6 @@ a:hover { color: #ff4328; }
           </sc-for>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Behind the scenes -->
-  <section id="behind-the-scenes" style="padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px); max-width: 1200px; margin: 0 auto">
-    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">FOXIE, BEHIND THE SCENES</p>
-    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px; max-width: 820px; text-wrap: pretty">Your content team, without building one.</h2>
-    <p style="font-size: 18px; color: #4a423b; margin: 0 0 48px; max-width: 620px">Strategy, ideas, scripts, design, editing and optimisation — handled as one system, so you can focus on building the brand.</p>
-    <div class="bts-grid">
-      <sc-for list="{{ bts }}" as="b" hint-placeholder-count="3">
-        <div class="bts-card">
-          <div class="bts-shot">
-            <img src="{{ b.img }}" alt="{{ b.alt }}" decoding="async">
-            <div class="bts-scrim">
-              <p class="bts-title">{{ b.title }}</p>
-            </div>
-          </div>
-          <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 18px 0 0">{{ b.body }}</p>
-        </div>
-      </sc-for>
     </div>
   </section>
 
@@ -418,17 +397,22 @@ a:hover { color: #ff4328; }
     </div>
   </section>
 
-  <!-- Process -->
-  <section id="process" style="padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px); max-width: 1200px; margin: 0 auto">
-    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 16px">How we work</h2>
-    <p style="font-size: 18px; color: #4a423b; margin: 0 0 56px; max-width: 640px">No plug-and-play content plans. We build around the brand, the person behind it, and what the audience actually responds to.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 24px">
-      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
-        <div style="background: #fff; border: 1px solid #e4dfd8; border-radius: 20px; padding: 36px">
-          <div style="width: 48px; height: 48px; border-radius: 50%; background: #ff4328; color: #f6f4f1; display: flex; align-items: center; justify-content: center; font-family: 'Archivo Black', sans-serif; font-size: 18px; margin-bottom: 22px">{{ s.n }}</div>
-          <h3 style="font-size: 20px; font-weight: 600; margin: 0 0 12px">{{ s.title }}</h3>
-          <p style="font-size: 15px; line-height: 1.6; color: #4a423b; margin: 0">{{ s.body }}</p>
-          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #a09585; margin-top: 20px; line-height: 1.5">{{ s.out }}</div>
+  <!-- Behind the scenes -->
+  <section id="behind-the-scenes" style="padding: clamp(60px, 9vw, 100px) clamp(20px, 5vw, 48px); max-width: 1200px; margin: 0 auto">
+    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #ff4328; letter-spacing: 1px; margin: 0 0 18px">FOXIE, BEHIND THE SCENES</p>
+    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -1.5px; margin: 0 0 12px; max-width: 820px; text-wrap: pretty">Your content team, without building one.</h2>
+    <p style="font-size: 18px; color: #4a423b; margin: 0 0 48px; max-width: 620px">Strategy, ideas, scripts, design, editing and optimisation — handled as one system, so you can focus on building the brand.</p>
+    <div class="bts-grid">
+      <sc-for list="{{ bts }}" as="b" hint-placeholder-count="3">
+        <div class="bts-card">
+          <div class="bts-shot">
+            <img src="{{ b.img }}" alt="{{ b.alt }}" decoding="async">
+            <div class="bts-scrim">
+              <p class="bts-title">{{ b.title }}</p>
+            </div>
+          </div>
+          <p style="font-size: 15px; line-height: 1.55; color: #4a423b; margin: 18px 0 0">{{ b.body }}</p>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #a09585; margin-top: 16px; line-height: 1.5">{{ b.out }}</div>
         </div>
       </sc-for>
     </div>
@@ -459,6 +443,16 @@ a:hover { color: #ff4328; }
           </sc-for>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Client logo strip -->
+  <section class="logo-bar" aria-label="Brands we have worked with">
+    <p class="logo-bar-label">BRANDS WE'VE WORKED WITH</p>
+    <div class="logo-row">
+      <sc-for list="{{ logoFiles }}" as="l" hint-placeholder-count="7">
+        <div class="logo-chip"><img src="{{ l.src }}" alt="{{ l.name }}"></div>
+      </sc-for>
     </div>
   </section>
 
@@ -511,22 +505,18 @@ class Component extends DCLogic {
     const logoFiles = [
       { name: "Smash Guys", src: "assets/logo-smashguys.png", cls: "logo-chip" },
       { name: "Swishyai", src: "assets/logo-swishyai.png", cls: "logo-chip" },
-      { name: "The Pizza Bakery", src: "assets/logo-pizzabakery.png", cls: "logo-chip is-plain" },
+      { name: "The Pizza Bakery", src: "assets/logo-pizzabakery.png", cls: "logo-chip" },
       { name: "Diabesmart", src: "assets/logo-diabesmart.png", cls: "logo-chip" },
       { name: "LifeAT", src: "assets/logo-lifeat.png", cls: "logo-chip" },
       { name: "Paris Panini", src: "assets/logo-parispanini.png", cls: "logo-chip" },
       { name: "Protein Chef", src: "assets/logo-proteinchef.png", cls: "logo-chip" },
     ];
-    const logos = [...logoFiles, ...logoFiles];
-    const steps = [
-      { n: "1", title: "Get the strategy right", body: "Before we create anything, we figure out what makes you worth paying attention to. We audit the brand, audience and existing content, sharpen the positioning, define the voice and build clear content pillars and formats around it.", out: "Positioning · Content pillars · Creative direction · Content roadmap" },
-      { n: "2", title: "Turn strategy into content", body: "Ideas are only useful when they get made well. We handle the system behind the content — ideation, calendars, scripting, design, editing and creative direction — so every piece feels intentional and recognisably yours.", out: "Ideas · Scripts · Reels · Carousels · Editing · Content calendar" },
-      { n: "3", title: "Learn what works. Then do more of it.", body: "We don't post and disappear. We review performance, watch what people respond to, test new ideas and continuously refine the strategy around what is actually driving attention, engagement and growth.", out: "Reach · Watch time · Saves · Shares · Engagement · Audience growth" },
-    ];
+    // One process section: the behind-the-scenes photos carry the "How we work"
+    // copy, including the measurement step that the old cards left out.
     const bts = [
-      { title: "Strategy before posting", body: "We figure out what you should say, how you should say it, and what your audience should remember you for.", img: "assets/bts-2.jpg", alt: "Planning a content shoot at the desk" },
-      { title: "One idea. More mileage.", body: "We turn strong ideas into reels, carousels, stories and repeatable formats instead of chasing content every week.", img: "assets/bts-1.jpg", alt: "Camera bodies and lenses laid out on a studio table before a shoot" },
-      { title: "From idea to published", body: "Strategy, scripting, creative direction, editing and social execution — all handled by one team.", img: "assets/bts-3.jpg", alt: "The Foxie Media team filming on set" },
+      { title: "Get the strategy right", body: "Before we create anything, we figure out what makes you worth paying attention to. We audit the brand, audience and existing content, sharpen the positioning, define the voice and build clear content pillars and formats around it.", out: "Positioning \u00b7 Content pillars \u00b7 Creative direction \u00b7 Content roadmap", img: "assets/bts-2.jpg", alt: "Planning a shoot at the desk" },
+      { title: "Turn strategy into content", body: "Ideas are only useful when they get made well. We handle the system behind the content \u2014 ideation, calendars, scripting, design, editing and creative direction \u2014 so every piece feels intentional and recognisably yours.", out: "Ideas \u00b7 Scripts \u00b7 Reels \u00b7 Carousels \u00b7 Editing \u00b7 Content calendar", img: "assets/bts-3.jpg", alt: "The Foxie Media team filming on set" },
+      { title: "Learn what works. Then do more of it.", body: "We don't post and disappear. We review performance, watch what people respond to, test new ideas and continuously refine the strategy around what is actually driving attention, engagement and growth.", out: "Reach \u00b7 Watch time \u00b7 Saves \u00b7 Shares \u00b7 Engagement \u00b7 Audience growth", img: "assets/bts-1.jpg", alt: "Reviewing footage and camera gear after a shoot" },
     ];
     const clips = Array.from({ length: 14 }, (_, i) => {
       const nn = String(i + 1).padStart(2, "0");
@@ -548,7 +538,7 @@ class Component extends DCLogic {
         boxStyle: `aspect-ratio: ${w} / ${h}`,
       };
     });
-    return { clients, logos, steps, bts, clips, aiClips };
+    return { clients, logoFiles, bts, clips, aiClips };
   }
 }
 </script>
@@ -599,17 +589,84 @@ class Component extends DCLogic {
     // tab is hidden, which would leave the reel uninitialised in a background tab.
     setTimeout(scan, 0);
   }
+  // Selected work: drifts on its own, but is a real scroll container so it can
+  // be dragged with a mouse, swiped on touch, or scrolled with a trackpad.
+  // Auto-drift resumes a moment after you let go.
+  function initWorkRow() {
+    var el = document.querySelector('.work-marquee:not([data-workrow])');
+    if (!el) return;
+    var track = el.querySelector('.work-track');
+    if (!track || !track.children.length) return;
+    el.dataset.workrow = '1';
+
+    var SPEED = 0.35;                 // px per frame, ~21px/s
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dragging = false, hovering = false, moved = false;
+    var startX = 0, startScroll = 0, resumeAt = 0;
+
+    function half() { return track.scrollWidth / 2; }
+    el.scrollLeft = 1;
+
+    function tick(now) {
+      var h = half();
+      if (!dragging && !hovering && !reduce && now >= resumeAt) el.scrollLeft += SPEED;
+      if (h > 0) {
+        if (el.scrollLeft >= h) el.scrollLeft -= h;
+        else if (el.scrollLeft <= 0) el.scrollLeft += h;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    function hold(ms) { resumeAt = performance.now() + ms; }
+
+    el.addEventListener('pointerdown', function (e) {
+      moved = false;
+      if (e.pointerType !== 'mouse') { hold(1500); return; }  // let touch scroll natively
+      if (e.button !== 0) return;
+      dragging = true;
+      startX = e.clientX;
+      startScroll = el.scrollLeft;
+      el.classList.add('is-dragging');
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 3) moved = true;
+      el.scrollLeft = startScroll - dx;
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      el.classList.remove('is-dragging');
+      hold(1200);
+    }
+    el.addEventListener('pointerup', endDrag);
+    el.addEventListener('pointercancel', endDrag);
+    // A drag that ends on a card must not follow its link.
+    el.addEventListener('click', function (e) {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
+    el.addEventListener('wheel', function () { hold(1500); }, { passive: true });
+    el.addEventListener('touchmove', function () { hold(1500); }, { passive: true });
+    el.addEventListener('mouseenter', function () { hovering = true; });
+    el.addEventListener('mouseleave', function () { hovering = false; });
+    el.addEventListener('focusin', function () { hold(4000); });
+  }
+
   queueScan();
   // Observe documentElement, not body: the renderer can swap the <body> node
   // itself, and an observer bound to the old body would never see the render.
-  new MutationObserver(queueScan).observe(document.documentElement, { childList: true, subtree: true });
-  document.addEventListener('DOMContentLoaded', queueScan);
-  window.addEventListener('load', queueScan);
+  new MutationObserver(function () { queueScan(); initWorkRow(); }).observe(document.documentElement, { childList: true, subtree: true });
+  document.addEventListener('DOMContentLoaded', function () { queueScan(); initWorkRow(); });
+  window.addEventListener('load', function () { queueScan(); initWorkRow(); });
   // Safety net for the same race, in case the render lands between events.
   var tries = 0;
   var poll = setInterval(function () {
     queueScan();
-    if (++tries > 40 || document.querySelector('.ai-card video[data-reel]')) clearInterval(poll);
+    initWorkRow();
+    if (++tries > 40 || (document.querySelector('.ai-card video[data-reel]') && document.querySelector('.work-marquee[data-workrow]'))) clearInterval(poll);
   }, 250);
 })();
 </script>
