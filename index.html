@@ -227,7 +227,6 @@ a:hover { color: #ff4328; }
 .reel-group { display: flex; flex-shrink: 0; gap: 16px; padding-right: 16px; }
 .reel-card { width: clamp(150px, 15vw, 210px); aspect-ratio: 9/16; border-radius: 18px; overflow: hidden; flex-shrink: 0; background: #efeae3; }
 .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.reel-marquee:hover .reel-track { animation-play-state: paused; }
 @keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 .reel-track.is-reverse { animation-name: marquee-reverse; animation-duration: 130s; }
 /* AI strip: clips are a mix of 9:16 and 16:9, so cards share a height and
@@ -267,14 +266,14 @@ a:hover { color: #ff4328; }
         <div class="reel-group">
           <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
             <div class="reel-card">
-              <video src="{{ v.src }}" data-poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback aria-label="Client content reel"></video>
+              <video src="{{ v.src }}" poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback aria-label="Client content reel"></video>
             </div>
           </sc-for>
         </div>
         <div class="reel-group" aria-hidden="true">
           <sc-for list="{{ clips }}" as="v" hint-placeholder-count="14">
             <div class="reel-card">
-              <video src="{{ v.src }}" data-poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback></video>
+              <video src="{{ v.src }}" poster="{{ v.poster }}" muted loop playsinline preload="none" disableremoteplayback></video>
             </div>
           </sc-for>
         </div>
@@ -450,7 +449,7 @@ a:hover { color: #ff4328; }
   <section class="logo-bar" aria-label="Brands we have worked with">
     <p class="logo-bar-label">BRANDS WE'VE WORKED WITH</p>
     <div class="logo-row">
-      <sc-for list="{{ logoFiles }}" as="l" hint-placeholder-count="7">
+      <sc-for list="{{ logoFiles }}" as="l" hint-placeholder-count="8">
         <div class="logo-chip"><img src="{{ l.src }}" alt="{{ l.name }}"></div>
       </sc-for>
     </div>
@@ -509,6 +508,7 @@ class Component extends DCLogic {
       { name: "Diabesmart", src: "assets/logo-diabesmart.png", cls: "logo-chip" },
       { name: "LifeAT", src: "assets/logo-lifeat.png", cls: "logo-chip" },
       { name: "Paris Panini", src: "assets/logo-parispanini.png", cls: "logo-chip" },
+      { name: "Neuro", src: "assets/logo-neuro.png", cls: "logo-chip" },
       { name: "Protein Chef", src: "assets/logo-proteinchef.png", cls: "logo-chip" },
     ];
     // One process section: the behind-the-scenes photos carry the "How we work"
@@ -599,20 +599,35 @@ class Component extends DCLogic {
     if (!track || !track.children.length) return;
     el.dataset.workrow = '1';
 
-    var SPEED = 0.35;                 // px per frame, ~21px/s
+    var SPEED = 0.4;                  // px per frame, ~24px/s
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var dragging = false, hovering = false, moved = false;
+    var dragging = false, moved = false;
     var startX = 0, startScroll = 0, resumeAt = 0;
 
     function half() { return track.scrollWidth / 2; }
     el.scrollLeft = 1;
+    // Keep the position in a float of our own. Chrome snaps scrollLeft to whole
+    // device pixels, so reading it back and adding a sub-pixel step each frame
+    // rounds straight back to where it started and the row never moves.
+    var pos = el.scrollLeft;
 
     function tick(now) {
       var h = half();
-      if (!dragging && !hovering && !reduce && now >= resumeAt) el.scrollLeft += SPEED;
-      if (h > 0) {
-        if (el.scrollLeft >= h) el.scrollLeft -= h;
-        else if (el.scrollLeft <= 0) el.scrollLeft += h;
+      var auto = !dragging && !reduce && now >= resumeAt;
+      if (auto) {
+        pos += SPEED;
+        if (h > 0) {
+          if (pos >= h) pos -= h;
+          else if (pos <= 0) pos += h;
+        }
+        el.scrollLeft = pos;
+      } else {
+        // The user is driving; follow their position instead of fighting it.
+        pos = el.scrollLeft;
+        if (h > 0) {
+          if (pos >= h) { pos -= h; el.scrollLeft = pos; }
+          else if (pos <= 0) { pos += h; el.scrollLeft = pos; }
+        }
       }
       requestAnimationFrame(tick);
     }
@@ -648,11 +663,9 @@ class Component extends DCLogic {
     el.addEventListener('click', function (e) {
       if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
     }, true);
-    el.addEventListener('wheel', function () { hold(1500); }, { passive: true });
-    el.addEventListener('touchmove', function () { hold(1500); }, { passive: true });
-    el.addEventListener('mouseenter', function () { hovering = true; });
-    el.addEventListener('mouseleave', function () { hovering = false; });
-    el.addEventListener('focusin', function () { hold(4000); });
+    // Only an active drag/scroll holds the drift, never hover or focus.
+    el.addEventListener('wheel', function () { hold(1200); }, { passive: true });
+    el.addEventListener('touchmove', function () { hold(1200); }, { passive: true });
   }
 
   queueScan();
