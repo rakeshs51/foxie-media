@@ -107,3 +107,8 @@ footer .brand img { height: 38px; }
   .facts { grid-template-columns: 1fr; gap: 4px 0; }
   .facts dt { margin-top: 14px; }
 }
+@media (max-width: 760px) {
+  footer { flex-direction: column; gap: 20px; }
+  .foot-phones { display: flex; flex-direction: column; gap: 4px; }
+  .foot-phones .sep { display: none; }
+}
