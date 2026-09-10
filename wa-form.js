@@ -34,14 +34,23 @@
     }
     if (err) err.hidden = true;
 
+    // Reads like a person wrote it, not a form dump. The answer sits on its own
+    // line rather than inside the sentence, so a long reply doesn't collide
+    // mid-clause. Company is folded into the greeting only when given.
+    var greeting = company
+      ? 'Hi there — I\'m ' + name + ', from ' + company + '.'
+      : 'Hi there — I\'m ' + name + '.';
+
     var lines = [
-      'New enquiry from foxie.media',
+      greeting,
       '',
-      'Name: ' + name,
+      'What I\'m looking for:',
+      need,
+      '',
+      'Best number to reach me: ' + phone,
+      '',
+      'Sent from foxie.media',
     ];
-    if (company) lines.push('Company: ' + company);
-    lines.push('Phone: ' + phone);
-    lines.push('Looking for: ' + need);
 
     var url = 'https://wa.me/' + (form.dataset.wa || '917338178311') +
               '?text=' + encodeURIComponent(lines.join('\n'));
