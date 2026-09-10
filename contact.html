@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://foxie.media/og-image.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
 <link rel="stylesheet" href="/site.css">
-<script src="/wa-form.js" defer></script>
+<script src="/wa-form.js?v=2" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">
@@ -96,13 +96,8 @@
         <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91 98765 43210" required>
       </label>
     </div>
-    <fieldset class="wa-field wa-choice">
-      <legend>I'm a</legend>
-      <label><input type="radio" name="kind" value="Person" checked><span>Person</span></label>
-      <label><input type="radio" name="kind" value="Company"><span>Company</span></label>
-    </fieldset>
-    <label class="wa-field wa-company" hidden>
-      <span>Company name</span>
+    <label class="wa-field">
+      <span>Company <span class="wa-opt">(optional)</span></span>
       <input name="company" type="text" autocomplete="organization" placeholder="Acme Pvt Ltd">
     </label>
     <label class="wa-field">

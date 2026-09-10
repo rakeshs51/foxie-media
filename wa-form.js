@@ -11,13 +11,6 @@
     if (field) field.classList.toggle('is-invalid', !!bad);
     return !bad;
   }
-  document.addEventListener('change', function (e) {
-    if (!e.target.closest) return;
-    var form = e.target.closest('.wa-form');
-    if (!form || e.target.name !== 'kind') return;
-    var box = form.querySelector('.wa-company');
-    if (box) box.hidden = e.target.value !== 'Company';
-  });
   document.addEventListener('submit', function (e) {
     var form = e.target.closest ? e.target.closest('.wa-form') : null;
     if (!form) return;
@@ -26,9 +19,7 @@
     var name = val(form, 'name');
     var phone = val(form, 'phone');
     var need = val(form, 'need');
-    var kindEl = form.querySelector('input[name="kind"]:checked');
-    var kind = kindEl ? kindEl.value : 'Person';
-    var company = kind === 'Company' ? val(form, 'company') : '';
+    var company = val(form, 'company');
 
     var ok = true;
     ok = mark(form, 'name', !name) && ok;
@@ -47,7 +38,6 @@
       'New enquiry from foxie.media',
       '',
       'Name: ' + name,
-      'Type: ' + kind,
     ];
     if (company) lines.push('Company: ' + company);
     lines.push('Phone: ' + phone);

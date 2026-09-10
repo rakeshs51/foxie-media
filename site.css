@@ -118,9 +118,7 @@ footer a:hover { color: var(--paper); }
 .wa-field input::placeholder, .wa-field textarea::placeholder { color: var(--muted); }
 .wa-field input:focus, .wa-field textarea:focus { outline: none; border-color: var(--ink); }
 .wa-field.is-invalid input, .wa-field.is-invalid textarea { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(26,21,18,.25); }
-.wa-choice { border: 0; padding: 0; margin: 0 0 16px; }
-.wa-choice label { display: inline-flex; align-items: center; gap: 8px; margin-right: 20px; font-size: 16px; cursor: pointer; }
-.wa-choice input { accent-color: var(--ink); width: 18px; height: 18px; }
+.wa-opt { opacity: .6; letter-spacing: 0; }
 .wa-error { margin: 0 0 14px; font-size: 15px; font-weight: 600; }
 .wa-submit { font: inherit; font-size: 18px; font-weight: 600; cursor: pointer; border: 0; background: var(--paper); color: var(--ink); padding: 18px 40px; border-radius: var(--r-pill); }
 .wa-submit:hover { background: var(--ink); color: var(--paper); }

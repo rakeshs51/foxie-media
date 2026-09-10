@@ -166,7 +166,7 @@
 }
 </script>
 <script src="./support.js"></script>
-<script src="/wa-form.js" defer></script>
+<script src="/wa-form.js?v=2" defer></script>
 </head>
 <body>
 <x-dc>
@@ -279,9 +279,7 @@ h2 { line-height: 1.1; }
 .wa-field input::placeholder, .wa-field textarea::placeholder { color: var(--muted); }
 .wa-field input:focus, .wa-field textarea:focus { outline: none; border-color: var(--ink); }
 .wa-field.is-invalid input, .wa-field.is-invalid textarea { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(26,21,18,.25); }
-.wa-choice { border: 0; padding: 0; margin: 0 0 16px; }
-.wa-choice label { display: inline-flex; align-items: center; gap: 8px; margin-right: 20px; font-size: 16px; cursor: pointer; }
-.wa-choice input { accent-color: var(--ink); width: 18px; height: 18px; }
+.wa-opt { opacity: .6; letter-spacing: 0; }
 .wa-error { margin: 0 0 14px; font-size: 15px; font-weight: 600; }
 .wa-submit { font: inherit; font-size: 18px; font-weight: 600; cursor: pointer; border: 0; background: var(--paper); color: var(--ink); padding: 18px 40px; border-radius: var(--r-pill); }
 .wa-submit:hover { background: var(--ink); color: var(--paper); }
@@ -388,6 +386,28 @@ h2 { line-height: 1.1; }
             <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" style-hover="border-color: var(--brand)">
               <div style="aspect-ratio: 4/3; background: var(--paper-2); position: relative; overflow: hidden">
                 <img src="{{ c.img }}" alt="{{ c.name }}" style="{{ c.imgStyle }}">
+              </div>
+              <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
+                  <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); white-space: nowrap">{{ c.followers }}</span>
+                </div>
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--forest); letter-spacing: var(--ls-wide); margin-top: 6px">{{ c.kind }}</div>
+                <p style="font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 14px 0 0">{{ c.body }}</p>
+                <sc-if value="{{ c.result }}">
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); margin-top: 14px">{{ c.result }}</div>
+                </sc-if>
+                <div style="font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
+                <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+        <div class="work-group" aria-hidden="true">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
+            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" tabindex="-1" style-hover="border-color: var(--brand)">
+              <div style="aspect-ratio: 4/3; background: var(--paper-2); position: relative; overflow: hidden">
+                <img src="{{ c.img }}" alt="" style="{{ c.imgStyle }}">
               </div>
               <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
@@ -571,13 +591,8 @@ h2 { line-height: 1.1; }
           <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91 98765 43210" required>
         </label>
       </div>
-      <fieldset class="wa-field wa-choice">
-        <legend>I'm a</legend>
-        <label><input type="radio" name="kind" value="Person" checked><span>Person</span></label>
-        <label><input type="radio" name="kind" value="Company"><span>Company</span></label>
-      </fieldset>
-      <label class="wa-field wa-company" hidden>
-        <span>Company name</span>
+      <label class="wa-field">
+        <span>Company <span class="wa-opt">(optional)</span></span>
         <input name="company" type="text" autocomplete="organization" placeholder="Acme Pvt Ltd">
       </label>
       <label class="wa-field">
@@ -764,12 +779,21 @@ class Component extends DCLogic {
     if (!track || !track.children.length) return;
     el.dataset.workrow = '1';
 
-    var SPEED = 0.24;                  // px per frame, ~14px/s
+    // px per SECOND, not per frame: a per-frame step drifts twice as fast on a
+    // 120Hz display as on 60Hz.
+    var SPEED = 14;
+    var last = 0;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var dragging = false, moved = false;
     var startX = 0, startScroll = 0, resumeAt = 0;
 
-    function half() { return track.scrollWidth / 2; }
+    // Wrap on ONE group's width, measured directly. scrollWidth/2 was wrong once
+    // a third group existed, and on a viewport wider than a single group the
+    // reachable scrollLeft is smaller than that, so the row stalled at the end.
+    function groupW() {
+      var g = track.firstElementChild;
+      return g ? g.getBoundingClientRect().width : 0;
+    }
     el.scrollLeft = 1;
     // Keep the position in a float of our own. Chrome snaps scrollLeft to whole
     // device pixels, so reading it back and adding a sub-pixel step each frame
@@ -777,10 +801,12 @@ class Component extends DCLogic {
     var pos = el.scrollLeft;
 
     function tick(now) {
-      var h = half();
+      var h = groupW();
+      var dt = last ? Math.min((now - last) / 1000, 0.1) : 0;   // cap after a tab switch
+      last = now;
       var auto = !dragging && !reduce && now >= resumeAt;
       if (auto) {
-        pos += SPEED;
+        pos += SPEED * dt;
         if (h > 0) {
           if (pos >= h) pos -= h;
           else if (pos <= 0) pos += h;
@@ -802,7 +828,10 @@ class Component extends DCLogic {
 
     el.addEventListener('pointerdown', function (e) {
       moved = false;
-      if (e.pointerType !== 'mouse') { hold(1500); return; }  // let touch scroll natively
+      // Touch scrolls natively. Don't hold here - a touch that turns out to be
+      // a vertical page scroll would freeze the row for no reason; the
+      // horizontal check in touchmove decides.
+      if (e.pointerType !== 'mouse') return;
       if (e.button !== 0) return;
       dragging = true;
       startX = e.clientX;
@@ -828,9 +857,24 @@ class Component extends DCLogic {
     el.addEventListener('click', function (e) {
       if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
     }, true);
-    // Only an active drag/scroll holds the drift, never hover or focus.
-    el.addEventListener('wheel', function () { hold(1200); }, { passive: true });
-    el.addEventListener('touchmove', function () { hold(1200); }, { passive: true });
+    // Only a HORIZONTAL gesture holds the drift. Scrolling the page vertically
+    // with the pointer over this row fires a stream of wheel/touchmove events
+    // at it, and holding on those froze the row the whole time you scrolled
+    // past it - which read as "the cards keep stopping".
+    el.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) hold(1200);
+    }, { passive: true });
+
+    var tsx = 0, tsy = 0;
+    el.addEventListener('touchstart', function (e) {
+      var t = e.touches[0];
+      if (t) { tsx = t.clientX; tsy = t.clientY; }
+    }, { passive: true });
+    el.addEventListener('touchmove', function (e) {
+      var t = e.touches[0];
+      if (!t) return;
+      if (Math.abs(t.clientX - tsx) > Math.abs(t.clientY - tsy)) hold(1200);
+    }, { passive: true });
   }
 
   queueScan();
