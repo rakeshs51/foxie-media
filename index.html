@@ -222,12 +222,13 @@ a:hover { color: var(--brand); }
 /* Client logos: a quiet credibility bar, not a section competing for attention */
 .logo-bar { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #fff; padding: 40px clamp(20px, 5vw, 48px); text-align: center; }
 .logo-bar-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: var(--ls-wide); color: var(--muted); margin: 0 0 26px; }
-.logo-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(20px, 3.4vw, 44px); max-width: var(--container); margin: 0 auto; }
-.logo-chip { height: 52px; border-radius: var(--r-sm); overflow: hidden; flex-shrink: 0; filter: grayscale(1); opacity: .55; transition: filter .25s ease, opacity .25s ease; }
-.logo-chip img { height: 52px; width: auto; display: block; }
+.logo-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(12px, 2vw, 32px); max-width: var(--container); margin: 0 auto; }
+/* Height scales with the viewport so all eight stay on one line down to 760px */
+.logo-chip { height: clamp(40px, 4vw, 52px); border-radius: var(--r-sm); overflow: hidden; flex-shrink: 0; filter: grayscale(1); opacity: .55; transition: filter .25s ease, opacity .25s ease; }
+.logo-chip img { height: clamp(40px, 4vw, 52px); width: auto; display: block; }
 .logo-chip:hover { filter: grayscale(0); opacity: 1; }
 /* Breakpoints stay literal: custom properties are invalid in a media condition. */
-@media (max-width: 620px) { .logo-chip, .logo-chip img { height: 42px; } }
+@media (max-width: 620px) { .logo-chip, .logo-chip img { height: 36px; } }
 @media (max-width: 620px) { a[data-navlink] { display: none; } }
 .brand { display: inline-flex; align-items: center; line-height: 0; }
 .brand img { height: 48px; width: auto; display: block; }
