@@ -176,7 +176,7 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Ink & paper */
@@ -207,9 +207,9 @@
   --measure-wide: 820px;
   --container: 1200px;
   /* Tracking scale */
-  --ls-display: -2px;
-  --ls-tight: -1.4px;
-  --ls-snug: -0.6px;
+  --ls-display: -1.4px;
+  --ls-tight: -0.7px;
+  --ls-snug: -0.3px;
   --ls-wide: 1px;
   /* Motion */
   --ease: cubic-bezier(.2,.7,.3,1);
@@ -226,8 +226,9 @@ a:hover { color: var(--brand); }
 .logo-chip { height: 52px; border-radius: var(--r-sm); overflow: hidden; flex-shrink: 0; filter: grayscale(1); opacity: .55; transition: filter .25s ease, opacity .25s ease; }
 .logo-chip img { height: 52px; width: auto; display: block; }
 .logo-chip:hover { filter: grayscale(0); opacity: 1; }
-@media (max-width: var(--measure)) { .logo-chip, .logo-chip img { height: 42px; } }
-@media (max-width: var(--measure)) { a[data-navlink] { display: none; } }
+/* Breakpoints stay literal: custom properties are invalid in a media condition. */
+@media (max-width: 620px) { .logo-chip, .logo-chip img { height: 42px; } }
+@media (max-width: 620px) { a[data-navlink] { display: none; } }
 .brand { display: inline-flex; align-items: center; line-height: 0; }
 .brand img { height: 48px; width: auto; display: block; }
 footer .brand img { height: 38px; }
@@ -237,9 +238,9 @@ footer .brand img { height: 38px; }
 .socials a:hover { color: var(--paper); }
 .foot-phones a { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .foot-phones a:hover { color: var(--paper); }
-@media (max-width: var(--measure-wide)) { .brand img { height: 34px; } footer .brand img { height: 30px; } }
+@media (max-width: 760px) { .brand img { height: 34px; } footer .brand img { height: 30px; } }
 .foot-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
-@media (max-width: var(--measure-wide)) {
+@media (max-width: 760px) {
   footer { flex-direction: column; justify-content: center; text-align: center; gap: 20px; }
   .foot-links { justify-content: center; gap: 12px 18px; }
   .foot-phones { display: flex; flex-direction: column; gap: 4px; }
@@ -259,11 +260,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; } .work-card:hover { transform: none; } }
+/* --- Display type: high-contrast serif, tuned for it --- */
+h1, h2, .panel h1, .panel h2 { font-weight: 600; }
+h1 { line-height: 1.06; }
+h2 { line-height: 1.1; }
 .seo-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 /* Contact form: collects the details, hands off to WhatsApp */
 .wa-form { max-width: var(--measure); margin: 0 auto; text-align: left; }
 .wa-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: var(--measure)) { .wa-row { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .wa-row { grid-template-columns: 1fr; } }
 .wa-field { display: block; margin: 0 0 16px; }
 .wa-field > span, .wa-field > legend { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: var(--ls-wide); text-transform: uppercase; opacity: .85; margin: 0 0 8px; padding: 0; }
 .wa-field input[type="text"], .wa-field input[type="tel"], .wa-field textarea {
@@ -285,7 +290,7 @@ p { text-wrap: pretty; }
 .bts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px; }
 .bts-card { display: flex; flex-direction: column; }
 /* On narrow screens these become a swipeable row rather than a tall stack */
-@media (max-width: var(--measure-wide)) {
+@media (max-width: 760px) {
   .bts-grid {
     display: flex; grid-template-columns: none; gap: 16px;
     overflow-x: auto; scroll-snap-type: x mandatory;
@@ -300,7 +305,7 @@ p { text-wrap: pretty; }
 .bts-shot { position: relative; aspect-ratio: 4/5; border-radius: var(--r-md); overflow: hidden; background: var(--paper-2); }
 .bts-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bts-scrim { position: absolute; inset: auto 0 0 0; padding: 20px; background: linear-gradient(to top, rgba(12,9,7,.82), rgba(12,9,7,.42) 55%, rgba(12,9,7,0)); }
-.bts-title { font-family: 'Archivo Black', sans-serif; font-size: 20px; line-height: 1.15; letter-spacing: var(--ls-snug); color: #fff; margin: 0; text-wrap: pretty; }
+.bts-title { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 20px; line-height: 1.15; letter-spacing: var(--ls-snug); color: #fff; margin: 0; text-wrap: pretty; }
 /* Selected work: drifts on its own, and can be dragged / swiped / scrolled */
 .work-marquee { overflow-x: auto; overflow-y: hidden; padding: 4px 0; cursor: grab; scrollbar-width: none; -ms-overflow-style: none; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .work-marquee::-webkit-scrollbar { display: none; }
@@ -310,15 +315,15 @@ p { text-wrap: pretty; }
 .work-group { display: flex; flex-shrink: 0; gap: 20px; padding-right: 20px; align-items: stretch; }
 .work-card { width: 340px; flex-shrink: 0; text-decoration: none; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; }
 .work-card img { pointer-events: none; }
-@media (max-width: var(--measure)) { .work-card { width: 285px; } }
+@media (max-width: 620px) { .work-card { width: 285px; } }
 /* Video reel strip */
 .reel-marquee { overflow: hidden; padding: 4px 0; }
-.reel-track { display: flex; width: max-content; animation: marquee 100s linear infinite; }
+.reel-track { display: flex; width: max-content; animation: marquee 140s linear infinite; }
 .reel-group { display: flex; flex-shrink: 0; gap: 16px; padding-right: 16px; }
 .reel-card { width: clamp(150px, 15vw, 210px); aspect-ratio: 9/16; border-radius: var(--r-md); overflow: hidden; flex-shrink: 0; background: var(--paper-2); }
 .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
 @keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.reel-track.is-reverse { animation-name: marquee-reverse; animation-duration: 78s; }
+.reel-track.is-reverse { animation-name: marquee-reverse; animation-duration: 110s; }
 /* AI strip: clips are a mix of 9:16 and 16:9, so cards share a height and
    keep their own width rather than cropping landscape into a vertical frame. */
 .ai-card { height: clamp(210px, 24vw, 300px); border-radius: var(--r-md); overflow: hidden; flex-shrink: 0; background: var(--paper-2); }
@@ -341,7 +346,7 @@ p { text-wrap: pretty; }
 
   <!-- Hero -->
   <header style="padding: var(--sec-y) var(--sec-x) clamp(36px, 5vw, 56px); max-width: var(--container); margin: 0 auto">
-    <h1 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.02; margin: 0 0 32px; letter-spacing: var(--ls-display); text-wrap: pretty">We make <span style="color: var(--brand)">brands</span> &amp; <span style="color: var(--brand)">founders</span> impossible to ignore.</h1>
+    <h1 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.06; margin: 0 0 32px; letter-spacing: var(--ls-display); text-wrap: pretty">We make <span style="color: var(--brand)">brands</span> &amp; <span style="color: var(--brand)">founders</span> impossible to ignore.</h1>
     <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap">
       <p style="font-size: 20px; line-height: 1.55; max-width: var(--measure); margin: 0; color: var(--ink-soft)">Foxie Media is a personal branding and brand management studio. We help ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
       <a href="#contact" style="text-decoration: none; background: var(--ink); color: var(--paper); padding: 18px 34px; border-radius: var(--r-pill); font-size: 17px; font-weight: 600; white-space: nowrap" style-hover="background: var(--brand); color: var(--paper)">Book a call →</a>
@@ -373,7 +378,7 @@ p { text-wrap: pretty; }
   <!-- Work / clients -->
   <section id="work" style="padding: var(--sec-y) 0">
     <div style="max-width: var(--container); margin: 0 auto; padding: 0 var(--sec-x) 48px">
-      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px">Selected work</h2>
+      <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px">Selected work</h2>
       <p style="font-size: 18px; color: var(--ink-soft); margin: 0; max-width: var(--measure)">Personal brands and companies, built with strategy and executed properly.</p>
     </div>
     <div class="work-marquee">
@@ -430,11 +435,11 @@ p { text-wrap: pretty; }
   <section id="services" style="background: var(--ink); color: var(--paper); padding: var(--sec-y) var(--sec-x)">
     <div style="max-width: var(--container); margin: 0 auto">
       <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--on-dark-2); margin: 0 0 20px; letter-spacing: var(--ls-wide)">WHAT WE DO</p>
-      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 56px; max-width: var(--measure-wide)">Two things. Done properly.</h2>
+      <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 56px; max-width: var(--measure-wide)">Two things. Done properly.</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px">
         <div style="border: 1px solid var(--ink-soft); border-radius: var(--r-lg); padding: 40px">
           <div style="font-family: 'IBM Plex Mono', monospace; color: var(--on-dark-2); font-size: 14px; margin-bottom: 16px">01</div>
-          <h3 style="font-family: 'Archivo Black', sans-serif; font-size: 28px; margin: 0 0 16px">Personal Branding</h3>
+          <h3 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 28px; margin: 0 0 16px">Personal Branding</h3>
           <p style="font-size: 16px; line-height: 1.6; color: var(--on-dark-2); margin: 0 0 24px">Your ideas, expertise and personality, turned into a brand people want to follow. We shape the strategy, stories and content behind your personal brand, then help execute it consistently without making you sound like everyone else online.</p>
           <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--paper)">
             <li>✦ Positioning &amp; personal brand strategy</li>
@@ -446,7 +451,7 @@ p { text-wrap: pretty; }
         </div>
         <div style="border: 1px solid var(--ink-soft); border-radius: var(--r-lg); padding: 40px">
           <div style="font-family: 'IBM Plex Mono', monospace; color: var(--on-dark-2); font-size: 14px; margin-bottom: 16px">02</div>
-          <h3 style="font-family: 'Archivo Black', sans-serif; font-size: 28px; margin: 0 0 16px">Brand Management</h3>
+          <h3 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 28px; margin: 0 0 16px">Brand Management</h3>
           <p style="font-size: 16px; line-height: 1.6; color: var(--on-dark-2); margin: 0 0 24px">Your brand's content presence, managed end to end. From strategy and ideas to creative direction and execution, we build the systems and content that keep your brand relevant, recognisable and worth following.</p>
           <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--paper)">
             <li>✦ Brand &amp; content strategy</li>
@@ -463,15 +468,15 @@ p { text-wrap: pretty; }
         <p style="font-size: 18px; margin: 0 0 32px; max-width: var(--measure)">Strategy is only useful if it gets executed.</p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 28px">
           <div>
-            <div style="font-family: 'Archivo Black', sans-serif; font-size: 16px; margin-bottom: 8px">Design</div>
+            <div style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px">Design</div>
             <div style="font-size: 14px; color: var(--on-dark-2); line-height: 1.55">Carousels · Social creatives · Visual storytelling</div>
           </div>
           <div>
-            <div style="font-family: 'Archivo Black', sans-serif; font-size: 16px; margin-bottom: 8px">Editing</div>
+            <div style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px">Editing</div>
             <div style="font-size: 14px; color: var(--on-dark-2); line-height: 1.55">Reels · Short-form · Motion · Content repurposing</div>
           </div>
           <div>
-            <div style="font-family: 'Archivo Black', sans-serif; font-size: 16px; margin-bottom: 8px">AI Creative</div>
+            <div style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px">AI Creative</div>
             <div style="font-size: 14px; color: var(--on-dark-2); line-height: 1.55">AI video · Product visuals · Animation · Experimental formats</div>
           </div>
         </div>
@@ -479,7 +484,7 @@ p { text-wrap: pretty; }
 
       <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); margin: 48px 0 0">Not a traditional Social Media Marketing agency — strategy first, always.</p>
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 28px">
-        <p style="font-family: 'Archivo Black', sans-serif; font-size: clamp(22px, 3vw, 32px); letter-spacing: var(--ls-snug); margin: 0">Building a brand or becoming one?</p>
+        <p style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(22px, 3vw, 32px); letter-spacing: var(--ls-snug); margin: 0">Building a brand or becoming one?</p>
         <a href="#contact" style="text-decoration: none; background: var(--brand); color: var(--paper); padding: 14px 26px; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; white-space: nowrap" style-hover="background: var(--paper); color: var(--ink)">Book a call →</a>
       </div>
     </div>
@@ -488,7 +493,7 @@ p { text-wrap: pretty; }
   <!-- Behind the scenes -->
   <section id="behind-the-scenes" style="padding: var(--sec-y) var(--sec-x); max-width: var(--container); margin: 0 auto">
     <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); letter-spacing: var(--ls-wide); margin: 0 0 18px">FOXIE, BEHIND THE SCENES</p>
-    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px; max-width: var(--measure-wide); text-wrap: pretty">Your content team, without building one.</h2>
+    <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px; max-width: var(--measure-wide); text-wrap: pretty">Your content team, without building one.</h2>
     <p style="font-size: 18px; color: var(--ink-soft); margin: 0 0 48px; max-width: var(--measure)">Strategy, ideas, scripts, design, editing and optimisation — handled as one system, so you can focus on building the brand.</p>
     <div class="bts-grid">
       <sc-for list="{{ bts }}" as="b" hint-placeholder-count="3">
@@ -510,7 +515,7 @@ p { text-wrap: pretty; }
   <section id="ai" style="background: var(--ink); color: var(--paper); padding: var(--sec-y) 0">
     <div style="max-width: var(--container); margin: 0 auto; padding: 0 var(--sec-x)">
       <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--on-dark-2); letter-spacing: var(--ls-wide); margin: 0 0 18px">WE ALSO MAKE WEIRD THINGS POSSIBLE</p>
-      <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 16px; max-width: var(--measure-wide); text-wrap: pretty">AI, when the idea calls for it.</h2>
+      <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 16px; max-width: var(--measure-wide); text-wrap: pretty">AI, when the idea calls for it.</h2>
       <p style="font-size: 18px; line-height: 1.55; margin: 0; max-width: var(--measure); color: var(--on-dark-2)">Not because everything needs AI. Because some ideas are better when there are fewer production limits.</p>
       <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); margin: 36px 0 0">AI Video · Product Visuals · Animation · Experimental Content</p>
     </div>
@@ -553,7 +558,7 @@ p { text-wrap: pretty; }
 
   <!-- CTA + footer -->
   <section id="contact" style="background: var(--brand); color: var(--paper); padding: var(--sec-y) var(--sec-x); text-align: center">
-    <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(36px, 6vw, 72px); letter-spacing: var(--ls-display); margin: 0 0 24px; text-wrap: pretty">Ready to build a brand people remember?</h2>
+    <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(36px, 6vw, 72px); letter-spacing: var(--ls-display); margin: 0 0 24px; text-wrap: pretty">Ready to build a brand people remember?</h2>
     <p style="font-size: 18px; margin: 0 0 40px; opacity: 0.9; max-width: var(--measure); margin-left: auto; margin-right: auto">Tell us what you're building, where you want to go, and we'll figure out how Foxie can help.</p>
     <form class="wa-form" data-wa="917338178311" novalidate>
       <div class="wa-row">
@@ -759,7 +764,7 @@ class Component extends DCLogic {
     if (!track || !track.children.length) return;
     el.dataset.workrow = '1';
 
-    var SPEED = 0.4;                  // px per frame, ~24px/s
+    var SPEED = 0.24;                  // px per frame, ~14px/s
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var dragging = false, moved = false;
     var startX = 0, startScroll = 0, resumeAt = 0;
