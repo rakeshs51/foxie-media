@@ -240,7 +240,7 @@ footer .brand img { height: 38px; }
 .foot-phones a { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .foot-phones a:hover { color: var(--paper); }
 @media (max-width: 760px) { .brand img { height: 34px; } footer .brand img { height: 30px; } }
-.foot-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
+.foot-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; font-size: 14px; }
 @media (max-width: 760px) {
   footer { flex-direction: column; justify-content: center; text-align: center; gap: 20px; }
   .foot-links { justify-content: center; gap: 12px 18px; }
@@ -265,6 +265,83 @@ p { text-wrap: pretty; }
 h1, h2, .panel h1, .panel h2 { font-weight: 600; }
 h1 { line-height: 1.06; }
 h2 { line-height: 1.1; }
+/* ---- Section & type primitives (replacing repeated inline styles) ---- */
+.sec { padding: var(--sec-y) var(--sec-x); max-width: var(--container); margin: 0 auto; }
+.sec-full { padding: var(--sec-y) 0; }
+.sec-dark { background: var(--ink); color: var(--paper); }
+.sec-head { max-width: var(--container); margin: 0 auto; padding: 0 var(--sec-x) 48px; }
+.sec-inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--sec-x); }
+.eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); letter-spacing: var(--ls-wide); margin: 0 0 18px; }
+.eyebrow-dark { color: var(--on-dark-2); }
+.h-display { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.06; letter-spacing: var(--ls-display); margin: 0 0 32px; }
+.h-sec { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px; max-width: var(--measure-wide); }
+.h-sec-full { max-width: none; }
+.h-sec-gap { margin-bottom: 16px; }
+.h-sub { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 28px; margin: 0 0 16px; }
+.lead { font-size: 18px; margin: 0; max-width: var(--measure); }
+.lead-ink { color: var(--ink-soft); }
+.lead-lh { line-height: 1.55; }
+.lead-dark { color: var(--on-dark-2); }
+.note-mono { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); }
+/* ---- Pill buttons: hover now lives in CSS, not a style-hover attribute ---- */
+.pill { text-decoration: none; display: inline-block; border-radius: var(--r-pill); font-weight: 600; white-space: nowrap; }
+.pill-ink { background: var(--ink); color: var(--paper); padding: 18px 34px; font-size: 17px; }
+.pill-ink:hover { background: var(--brand); color: var(--paper); }
+.pill-brand { background: var(--brand); color: var(--paper); padding: 14px 26px; font-size: 15px; }
+.pill-brand:hover { background: var(--paper); color: var(--ink); }
+.pill-nav { background: var(--brand); color: var(--paper); padding: 12px 22px; font-size: 15px; }
+.pill-nav:hover { background: var(--ink); color: var(--paper); }
+.nav-a { text-decoration: none; font-size: 15px; }
+/* ---- Work card internals (were repeated inline across three tiling groups) ---- */
+.wc-media { aspect-ratio: 4/3; background: var(--paper-2); position: relative; overflow: hidden; }
+.wc-body { padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+.wc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.wc-name { font-weight: 600; font-size: 18px; }
+.wc-count { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.wc-kind { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--forest); letter-spacing: var(--ls-wide); margin-top: 6px; }
+.wc-desc { font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 14px 0 0; }
+.wc-result { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); margin-top: 14px; }
+.wc-tags { font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.45; }
+.wc-cta { font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px; }
+.work-card:hover { border-color: var(--brand); }
+/* ---- Services boxes ---- */
+.svc-box { border: 1px solid var(--ink-soft); border-radius: var(--r-lg); padding: 40px; }
+.svc-kicker { font-family: 'IBM Plex Mono', monospace; color: var(--on-dark-2); font-size: 14px; margin-bottom: 16px; }
+.svc-p { font-size: 16px; line-height: 1.6; color: var(--on-dark-2); margin: 0 0 24px; }
+.svc-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--paper); }
+.svc-cap { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+.svc-cap-p { font-size: 14px; color: var(--on-dark-2); line-height: 1.55; }
+.nav-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px var(--sec-x); border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--paper); z-index: 10; }
+.nav-group { display: flex; align-items: center; gap: clamp(14px, 3vw, 28px); }
+.hero { padding: var(--sec-y) var(--sec-x) clamp(36px, 5vw, 56px); max-width: var(--container); margin: 0 auto; }
+.hero-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.hero-lead { font-size: 20px; line-height: 1.55; max-width: var(--measure); margin: 0; color: var(--ink-soft); }
+.sec-narrow { padding: var(--sec-y) var(--sec-x); max-width: var(--measure-wide); margin: 0 auto; text-align: center; }
+.sec-cta { background: var(--brand); color: var(--paper); padding: var(--sec-y) var(--sec-x); text-align: center; }
+.sec-cta-lead { font-size: 18px; margin: 0 auto 40px; opacity: .9; max-width: var(--measure); }
+.reel-sec { padding: 0 0 clamp(48px, 7vw, 80px); }
+.h-cta { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(36px, 6vw, 72px); letter-spacing: var(--ls-display); margin: 0 0 24px; }
+.h-band { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(22px, 3vw, 32px); letter-spacing: var(--ls-snug); margin: 0; }
+.pull { font-size: clamp(20px, 2.6vw, 26px); line-height: 1.45; font-weight: 500; letter-spacing: var(--ls-snug); margin: 0; }
+.pull-note { font-size: 16px; line-height: 1.6; color: var(--ink-soft); max-width: var(--measure); margin: 28px auto 0; }
+.lead-gap { margin: 0 0 48px; }
+.lead-gap-sm { margin: 0 0 32px; }
+.mono-note { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); }
+.mono-note-lg { margin: 48px 0 0; }
+.mono-note-md { margin: 36px 0 0; }
+.svc-band { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 28px; }
+.bts-body { font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 18px 0 0; }
+.sec-pad { padding: var(--sec-y) var(--sec-x); }
+.wrap { max-width: var(--container); margin: 0 auto; }
+.page-root { font-family: 'Archivo', sans-serif; color: var(--ink); background: var(--paper); min-width: 320px; }
+.hi { color: var(--brand); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px; }
+.grid-auto-sm { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 28px; }
+.rule-top { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--ink-soft); }
+.bts-out { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 16px; line-height: 1.5; }
+.strip-gap { margin-top: clamp(36px, 5vw, 52px); }
+.site-foot { background: var(--ink); color: var(--muted); padding: 32px var(--sec-x); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.foot-copy { font-size: 13px; }
 .seo-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 /* Contact form: collects the details, hands off to WhatsApp */
 .wa-form { max-width: var(--measure); margin: 0 auto; text-align: left; }
@@ -330,30 +407,30 @@ h2 { line-height: 1.1; }
 @media (prefers-reduced-motion: reduce) { .reel-track { animation: none; } }
 </style>
 </helmet>
-<div style="font-family: 'Archivo', sans-serif; color: var(--ink); background: var(--paper); min-width: 320px">
+<div class="page-root">
 
   <!-- Nav -->
-  <nav style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px clamp(20px, 5vw, 48px); border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--paper); z-index: 10">
+  <nav class="nav-bar">
     <a href="/" class="brand" aria-label="Foxie Media"><img src="/assets/logo-foxie.png" alt="Foxie Media"></a>
-    <div style="display: flex; align-items: center; gap: clamp(14px, 3vw, 28px)">
-      <a href="#work" data-navlink="1" style="text-decoration: none; font-size: 15px">Work</a>
-      <a href="#services" data-navlink="1" style="text-decoration: none; font-size: 15px">Services</a>
-      <a href="#about" data-navlink="1" style="text-decoration: none; font-size: 15px">About</a>
-      <a href="#contact" style="text-decoration: none; background: var(--brand); color: var(--paper); padding: 12px 22px; border-radius: var(--r-pill); font-size: 15px; font-weight: 600" style-hover="background: var(--ink); color: var(--paper)">Contact</a>
+    <div class="nav-group">
+      <a href="#work" data-navlink="1" class="nav-a">Work</a>
+      <a href="#services" data-navlink="1" class="nav-a">Services</a>
+      <a href="#about" data-navlink="1" class="nav-a">About</a>
+      <a href="#contact" class="pill pill-nav">Contact</a>
     </div>
   </nav>
 
   <!-- Hero -->
-  <header style="padding: var(--sec-y) var(--sec-x) clamp(36px, 5vw, 56px); max-width: var(--container); margin: 0 auto">
-    <h1 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(40px, 6.4vw, 84px); line-height: 1.06; margin: 0 0 32px; letter-spacing: var(--ls-display); text-wrap: pretty">We make <span style="color: var(--brand)">brands</span> &amp; <span style="color: var(--brand)">founders</span> impossible to ignore.</h1>
-    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap">
-      <p style="font-size: 20px; line-height: 1.55; max-width: var(--measure); margin: 0; color: var(--ink-soft)">Foxie Media is a personal branding and brand management studio. We help ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
-      <a href="#contact" style="text-decoration: none; background: var(--ink); color: var(--paper); padding: 18px 34px; border-radius: var(--r-pill); font-size: 17px; font-weight: 600; white-space: nowrap" style-hover="background: var(--brand); color: var(--paper)">Book a call →</a>
+  <header class="hero">
+    <h1 class="h-display">We make <span class="hi">brands</span> &amp; <span class="hi">founders</span> impossible to ignore.</h1>
+    <div class="hero-row">
+      <p class="hero-lead">Foxie Media is a personal branding and brand management studio. We help ambitious brands and founders build visibility, credibility and growth through strategy, storytelling and content.</p>
+      <a href="#contact" class="pill pill-ink">Book a call →</a>
     </div>
   </header>
 
   <!-- Client video reel: sits directly under the hero, Halcyon-style -->
-  <section id="reel" style="padding: 0 0 clamp(48px, 7vw, 80px)" aria-label="The work, in motion">
+  <section id="reel" class="reel-sec" aria-label="The work, in motion">
     <div class="reel-marquee">
       <div class="reel-track">
         <div class="reel-group">
@@ -375,75 +452,75 @@ h2 { line-height: 1.1; }
   </section>
 
   <!-- Work / clients -->
-  <section id="work" style="padding: var(--sec-y) 0">
-    <div style="max-width: var(--container); margin: 0 auto; padding: 0 var(--sec-x) 48px">
-      <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px">Selected work</h2>
-      <p style="font-size: 18px; color: var(--ink-soft); margin: 0; max-width: var(--measure)">Personal brands and companies, built with strategy and executed properly.</p>
+  <section id="work" class="sec-full">
+    <div class="sec-head">
+      <h2 class="h-sec h-sec-full">Selected work</h2>
+      <p class="lead lead-ink">Personal brands and companies, built with strategy and executed properly.</p>
     </div>
     <div class="work-marquee">
       <div class="work-track">
         <div class="work-group">
           <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
-            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" style-hover="border-color: var(--brand)">
-              <div style="aspect-ratio: 4/3; background: var(--paper-2); position: relative; overflow: hidden">
+            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener">
+              <div class="wc-media">
                 <img src="{{ c.img }}" alt="{{ c.name }}" style="{{ c.imgStyle }}">
               </div>
-              <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
-                  <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
-                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); white-space: nowrap">{{ c.followers }}</span>
+              <div class="wc-body">
+                <div class="wc-top">
+                  <span class="wc-name">{{ c.name }}</span>
+                  <span class="wc-count">{{ c.followers }}</span>
                 </div>
-                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--forest); letter-spacing: var(--ls-wide); margin-top: 6px">{{ c.kind }}</div>
-                <p style="font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 14px 0 0">{{ c.body }}</p>
+                <div class="wc-kind">{{ c.kind }}</div>
+                <p class="wc-desc">{{ c.body }}</p>
                 <sc-if value="{{ c.result }}">
-                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); margin-top: 14px">{{ c.result }}</div>
+                  <div class="wc-result">{{ c.result }}</div>
                 </sc-if>
-                <div style="font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
-                <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
+                <div class="wc-tags">{{ c.tags }}</div>
+                <div class="wc-cta">View Instagram ↗</div>
               </div>
             </a>
           </sc-for>
         </div>
         <div class="work-group" aria-hidden="true">
           <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
-            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" tabindex="-1" style-hover="border-color: var(--brand)">
-              <div style="aspect-ratio: 4/3; background: var(--paper-2); position: relative; overflow: hidden">
+            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" tabindex="-1">
+              <div class="wc-media">
                 <img src="{{ c.img }}" alt="" style="{{ c.imgStyle }}">
               </div>
-              <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
-                  <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
-                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); white-space: nowrap">{{ c.followers }}</span>
+              <div class="wc-body">
+                <div class="wc-top">
+                  <span class="wc-name">{{ c.name }}</span>
+                  <span class="wc-count">{{ c.followers }}</span>
                 </div>
-                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--forest); letter-spacing: var(--ls-wide); margin-top: 6px">{{ c.kind }}</div>
-                <p style="font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 14px 0 0">{{ c.body }}</p>
+                <div class="wc-kind">{{ c.kind }}</div>
+                <p class="wc-desc">{{ c.body }}</p>
                 <sc-if value="{{ c.result }}">
-                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); margin-top: 14px">{{ c.result }}</div>
+                  <div class="wc-result">{{ c.result }}</div>
                 </sc-if>
-                <div style="font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
-                <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
+                <div class="wc-tags">{{ c.tags }}</div>
+                <div class="wc-cta">View Instagram ↗</div>
               </div>
             </a>
           </sc-for>
         </div>
         <div class="work-group" aria-hidden="true">
           <sc-for list="{{ clients }}" as="c" hint-placeholder-count="7">
-            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" tabindex="-1" style-hover="border-color: var(--brand)">
-              <div style="aspect-ratio: 4/3; background: var(--paper-2); position: relative; overflow: hidden">
+            <a class="work-card" href="{{ c.link }}" target="_blank" rel="noopener" tabindex="-1">
+              <div class="wc-media">
                 <img src="{{ c.img }}" alt="" style="{{ c.imgStyle }}">
               </div>
-              <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px">
-                  <span style="font-weight: 600; font-size: 18px">{{ c.name }}</span>
-                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); white-space: nowrap">{{ c.followers }}</span>
+              <div class="wc-body">
+                <div class="wc-top">
+                  <span class="wc-name">{{ c.name }}</span>
+                  <span class="wc-count">{{ c.followers }}</span>
                 </div>
-                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--forest); letter-spacing: var(--ls-wide); margin-top: 6px">{{ c.kind }}</div>
-                <p style="font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 14px 0 0">{{ c.body }}</p>
+                <div class="wc-kind">{{ c.kind }}</div>
+                <p class="wc-desc">{{ c.body }}</p>
                 <sc-if value="{{ c.result }}">
-                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); margin-top: 14px">{{ c.result }}</div>
+                  <div class="wc-result">{{ c.result }}</div>
                 </sc-if>
-                <div style="font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.45">{{ c.tags }}</div>
-                <div style="font-size: 14px; font-weight: 600; margin-top: auto; padding-top: 18px">View Instagram ↗</div>
+                <div class="wc-tags">{{ c.tags }}</div>
+                <div class="wc-cta">View Instagram ↗</div>
               </div>
             </a>
           </sc-for>
@@ -453,16 +530,16 @@ h2 { line-height: 1.1; }
   </section>
 
   <!-- Services: two pillars -->
-  <section id="services" style="background: var(--ink); color: var(--paper); padding: var(--sec-y) var(--sec-x)">
-    <div style="max-width: var(--container); margin: 0 auto">
-      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--on-dark-2); margin: 0 0 20px; letter-spacing: var(--ls-wide)">WHAT WE DO</p>
-      <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 56px; max-width: var(--measure-wide)">Two things. Done properly.</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 24px">
-        <div style="border: 1px solid var(--ink-soft); border-radius: var(--r-lg); padding: 40px">
-          <div style="font-family: 'IBM Plex Mono', monospace; color: var(--on-dark-2); font-size: 14px; margin-bottom: 16px">01</div>
-          <h3 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 28px; margin: 0 0 16px">Personal Branding</h3>
-          <p style="font-size: 16px; line-height: 1.6; color: var(--on-dark-2); margin: 0 0 24px">Your ideas, expertise and personality, turned into a brand people want to follow. We shape the strategy, stories and content behind your personal brand, then help execute it consistently without making you sound like everyone else online.</p>
-          <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--paper)">
+  <section id="services" class="sec-dark sec-pad">
+    <div class="wrap">
+      <p class="eyebrow eyebrow-dark" style="font-size: 14px; margin-bottom: 20px">WHAT WE DO</p>
+      <h2 class="h-sec" style="margin-bottom: 56px">Two things. Done properly.</h2>
+      <div class="grid-auto">
+        <div class="svc-box">
+          <div class="svc-kicker">01</div>
+          <h3 class="h-sub">Personal Branding</h3>
+          <p class="svc-p">Your ideas, expertise and personality, turned into a brand people want to follow. We shape the strategy, stories and content behind your personal brand, then help execute it consistently without making you sound like everyone else online.</p>
+          <ul class="svc-list">
             <li>✦ Positioning &amp; personal brand strategy</li>
             <li>✦ Content strategy &amp; ideation</li>
             <li>✦ Scriptwriting &amp; storytelling</li>
@@ -470,11 +547,11 @@ h2 { line-height: 1.1; }
             <li>✦ Growth reviews &amp; optimisation</li>
           </ul>
         </div>
-        <div style="border: 1px solid var(--ink-soft); border-radius: var(--r-lg); padding: 40px">
-          <div style="font-family: 'IBM Plex Mono', monospace; color: var(--on-dark-2); font-size: 14px; margin-bottom: 16px">02</div>
-          <h3 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 28px; margin: 0 0 16px">Brand Management</h3>
-          <p style="font-size: 16px; line-height: 1.6; color: var(--on-dark-2); margin: 0 0 24px">Your brand's content presence, managed end to end. From strategy and ideas to creative direction and execution, we build the systems and content that keep your brand relevant, recognisable and worth following.</p>
-          <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--paper)">
+        <div class="svc-box">
+          <div class="svc-kicker">02</div>
+          <h3 class="h-sub">Brand Management</h3>
+          <p class="svc-p">Your brand's content presence, managed end to end. From strategy and ideas to creative direction and execution, we build the systems and content that keep your brand relevant, recognisable and worth following.</p>
+          <ul class="svc-list">
             <li>✦ Brand &amp; content strategy</li>
             <li>✦ Content ideation &amp; calendars</li>
             <li>✦ Creative direction &amp; copywriting</li>
@@ -484,38 +561,38 @@ h2 { line-height: 1.1; }
         </div>
       </div>
 
-      <div style="margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--ink-soft)">
-        <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--on-dark-2); letter-spacing: var(--ls-wide); margin: 0 0 12px">BUILT INTO THE WORK</p>
-        <p style="font-size: 18px; margin: 0 0 32px; max-width: var(--measure)">Strategy is only useful if it gets executed.</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 28px">
+      <div class="rule-top">
+        <p class="eyebrow eyebrow-dark" style="margin-bottom: 12px">BUILT INTO THE WORK</p>
+        <p class="lead lead-gap-sm">Strategy is only useful if it gets executed.</p>
+        <div class="grid-auto-sm">
           <div>
-            <div style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px">Design</div>
-            <div style="font-size: 14px; color: var(--on-dark-2); line-height: 1.55">Carousels · Social creatives · Visual storytelling</div>
+            <div class="svc-cap">Design</div>
+            <div class="svc-cap-p">Carousels · Social creatives · Visual storytelling</div>
           </div>
           <div>
-            <div style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px">Editing</div>
-            <div style="font-size: 14px; color: var(--on-dark-2); line-height: 1.55">Reels · Short-form · Motion · Content repurposing</div>
+            <div class="svc-cap">Editing</div>
+            <div class="svc-cap-p">Reels · Short-form · Motion · Content repurposing</div>
           </div>
           <div>
-            <div style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: 16px; margin-bottom: 8px">AI Creative</div>
-            <div style="font-size: 14px; color: var(--on-dark-2); line-height: 1.55">AI video · Product visuals · Animation · Experimental formats</div>
+            <div class="svc-cap">AI Creative</div>
+            <div class="svc-cap-p">AI video · Product visuals · Animation · Experimental formats</div>
           </div>
         </div>
       </div>
 
-      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); margin: 48px 0 0">Not a traditional Social Media Marketing agency — strategy first, always.</p>
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 28px">
-        <p style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(22px, 3vw, 32px); letter-spacing: var(--ls-snug); margin: 0">Building a brand or becoming one?</p>
-        <a href="#contact" style="text-decoration: none; background: var(--brand); color: var(--paper); padding: 14px 26px; border-radius: var(--r-pill); font-size: 15px; font-weight: 600; white-space: nowrap" style-hover="background: var(--paper); color: var(--ink)">Book a call →</a>
+      <p class="mono-note mono-note-lg">Not a traditional Social Media Marketing agency — strategy first, always.</p>
+      <div class="svc-band">
+        <p class="h-band">Building a brand or becoming one?</p>
+        <a href="#contact" class="pill pill-brand">Book a call →</a>
       </div>
     </div>
   </section>
 
   <!-- Behind the scenes -->
-  <section id="behind-the-scenes" style="padding: var(--sec-y) var(--sec-x); max-width: var(--container); margin: 0 auto">
-    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); letter-spacing: var(--ls-wide); margin: 0 0 18px">FOXIE, BEHIND THE SCENES</p>
-    <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 12px; max-width: var(--measure-wide); text-wrap: pretty">Your content team, without building one.</h2>
-    <p style="font-size: 18px; color: var(--ink-soft); margin: 0 0 48px; max-width: var(--measure)">Strategy, ideas, scripts, design, editing and optimisation — handled as one system, so you can focus on building the brand.</p>
+  <section id="behind-the-scenes" class="sec">
+    <p class="eyebrow">FOXIE, BEHIND THE SCENES</p>
+    <h2 class="h-sec">Your content team, without building one.</h2>
+    <p class="lead lead-ink lead-gap">Strategy, ideas, scripts, design, editing and optimisation — handled as one system, so you can focus on building the brand.</p>
     <div class="bts-grid">
       <sc-for list="{{ bts }}" as="b" hint-placeholder-count="3">
         <div class="bts-card">
@@ -525,22 +602,22 @@ h2 { line-height: 1.1; }
               <p class="bts-title">{{ b.title }}</p>
             </div>
           </div>
-          <p style="font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 18px 0 0">{{ b.body }}</p>
-          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 16px; line-height: 1.5">{{ b.out }}</div>
+          <p class="bts-body">{{ b.body }}</p>
+          <div class="bts-out">{{ b.out }}</div>
         </div>
       </sc-for>
     </div>
   </section>
 
   <!-- AI creative -->
-  <section id="ai" style="background: var(--ink); color: var(--paper); padding: var(--sec-y) 0">
-    <div style="max-width: var(--container); margin: 0 auto; padding: 0 var(--sec-x)">
-      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--on-dark-2); letter-spacing: var(--ls-wide); margin: 0 0 18px">WE ALSO MAKE WEIRD THINGS POSSIBLE</p>
-      <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: var(--ls-tight); margin: 0 0 16px; max-width: var(--measure-wide); text-wrap: pretty">AI, when the idea calls for it.</h2>
-      <p style="font-size: 18px; line-height: 1.55; margin: 0; max-width: var(--measure); color: var(--on-dark-2)">Not because everything needs AI. Because some ideas are better when there are fewer production limits.</p>
-      <p style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--muted); margin: 36px 0 0">AI Video · Product Visuals · Animation · Experimental Content</p>
+  <section id="ai" class="sec-dark sec-full">
+    <div class="sec-inner">
+      <p class="eyebrow eyebrow-dark">WE ALSO MAKE WEIRD THINGS POSSIBLE</p>
+      <h2 class="h-sec h-sec-gap">AI, when the idea calls for it.</h2>
+      <p class="lead lead-dark lead-lh">Not because everything needs AI. Because some ideas are better when there are fewer production limits.</p>
+      <p class="mono-note mono-note-md">AI Video · Product Visuals · Animation · Experimental Content</p>
     </div>
-    <div class="reel-marquee" style="margin-top: clamp(36px, 5vw, 52px)">
+    <div class="reel-marquee strip-gap">
       <div class="reel-track is-reverse">
         <div class="reel-group">
           <sc-for list="{{ aiClips }}" as="v" hint-placeholder-count="19">
@@ -571,16 +648,16 @@ h2 { line-height: 1.1; }
   </section>
 
   <!-- Founder line -->
-  <section id="about" style="padding: var(--sec-y) var(--sec-x); max-width: var(--measure-wide); margin: 0 auto; text-align: center">
-    <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--forest); letter-spacing: var(--ls-wide); margin: 0 0 18px">LED BY VARSHA SANGOLLI</p>
-    <p style="font-size: clamp(20px, 2.6vw, 26px); line-height: 1.45; font-weight: 500; letter-spacing: var(--ls-snug); margin: 0; text-wrap: pretty">"I built Foxie to be the kind of creative partner I felt brands and founders actually needed, one that understands the internet, thinks strategically, cares about the idea, and can execute it properly."</p>
-    <p style="font-size: 16px; line-height: 1.6; color: var(--ink-soft); max-width: var(--measure); margin: 28px auto 0">The studio is not a traditional social media marketing agency — strategy first, then design, editing and AI creative.</p>
+  <section id="about" class="sec-narrow">
+    <p class="eyebrow">LED BY VARSHA SANGOLLI</p>
+    <p class="pull">"I built Foxie to be the kind of creative partner I felt brands and founders actually needed, one that understands the internet, thinks strategically, cares about the idea, and can execute it properly."</p>
+    <p class="pull-note">The studio is not a traditional social media marketing agency — strategy first, then design, editing and AI creative.</p>
   </section>
 
   <!-- CTA + footer -->
-  <section id="contact" style="background: var(--brand); color: var(--paper); padding: var(--sec-y) var(--sec-x); text-align: center">
-    <h2 style="font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-weight: 600; font-size: clamp(36px, 6vw, 72px); letter-spacing: var(--ls-display); margin: 0 0 24px; text-wrap: pretty">Ready to build a brand people remember?</h2>
-    <p style="font-size: 18px; margin: 0 0 40px; opacity: 0.9; max-width: var(--measure); margin-left: auto; margin-right: auto">Tell us what you're building, where you want to go, and we'll figure out how Foxie can help.</p>
+  <section id="contact" class="sec-cta">
+    <h2 class="h-cta">Ready to build a brand people remember?</h2>
+    <p class="sec-cta-lead">Tell us what you're building, where you want to go, and we'll figure out how Foxie can help.</p>
     <form class="wa-form" data-wa="917338178311" novalidate>
       <div class="wa-row">
         <label class="wa-field">
@@ -605,15 +682,15 @@ h2 { line-height: 1.1; }
       <p class="wa-note">Opens WhatsApp with your details filled in. Nothing is sent until you hit send there.</p>
     </form>
   </section>
-  <footer style="background: var(--ink); color: var(--muted); padding: 32px clamp(20px, 5vw, 48px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px">
+  <footer class="site-foot">
     <a href="/" class="brand" aria-label="Foxie Media"><img src="/assets/logo-foxie-light.png" alt="Foxie Media"></a>
-    <div class="foot-links" style="font-size: 14px">
+    <div class="foot-links">
       <a href="/faq" style="color: var(--muted); text-decoration: none" style-hover="color: var(--paper)">FAQ</a>
-      <span style="color: var(--muted)">coffee@foxie.media</span>
+      <span>coffee@foxie.media</span>
       <span class="foot-phones"><a href="tel:+917338178311">+91 73381 78311</a><span class="sep"> · </span><a href="tel:+918861596468">+91 88615 96468</a></span>
       <span class="socials"><a href="https://www.instagram.com/hey.varshh/" target="_blank" rel="noopener" aria-label="Foxie Media on Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg></a><a href="https://www.linkedin.com/in/varsha-sangolli-177542349" target="_blank" rel="noopener" aria-label="Foxie Media on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3.2 9h3.6v12H3.2zM9.2 9h3.45v1.65h.05c.5-.9 1.75-1.9 3.6-1.9 3.85 0 4.5 2.2 4.5 5.15V21h-3.6v-5.6c0-1.35-.03-3.1-1.9-3.1-1.9 0-2.2 1.45-2.2 2.99V21H9.2z"/></svg></a><a href="https://wa.me/917338178311" target="_blank" rel="noopener" aria-label="Message Foxie Media on WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.16 8.16 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.17-.47-.29z"/></svg></a></span>
     </div>
-    <div style="font-size: 13px">© 2026 Foxie Media</div>
+    <div class="foot-copy">© 2026 Foxie Media</div>
     <nav class="seo-only" aria-label="Site">
       <a href="/work">Work</a>
       <a href="/services">Services</a>
