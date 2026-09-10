@@ -63,3 +63,47 @@ footer a:hover { color: #f6f4f1; }
   .facts { grid-template-columns: 1fr; gap: 4px 0; }
   .facts dt { margin-top: 12px; }
 }
+
+/* Contact form: collects the details, hands off to WhatsApp */
+.wa-form { max-width: 620px; margin: 0 auto; text-align: left; }
+.wa-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .wa-row { grid-template-columns: 1fr; } }
+.wa-field { display: block; margin: 0 0 16px; }
+.wa-field > span, .wa-field > legend { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: .85; margin: 0 0 8px; padding: 0; }
+.wa-field input[type="text"], .wa-field input[type="tel"], .wa-field textarea {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; color: #1a1512;
+  background: #fff; border: 2px solid transparent; border-radius: 14px; padding: 14px 16px;
+}
+.wa-field textarea { resize: vertical; min-height: 88px; }
+.wa-field input::placeholder, .wa-field textarea::placeholder { color: #a09585; }
+.wa-field input:focus, .wa-field textarea:focus { outline: none; border-color: #1a1512; }
+.wa-field.is-invalid input, .wa-field.is-invalid textarea { border-color: #1a1512; box-shadow: 0 0 0 3px rgba(26,21,18,.25); }
+.wa-choice { border: 0; padding: 0; margin: 0 0 16px; }
+.wa-choice label { display: inline-flex; align-items: center; gap: 8px; margin-right: 20px; font-size: 16px; cursor: pointer; }
+.wa-choice input { accent-color: #1a1512; width: 18px; height: 18px; }
+.wa-error { margin: 0 0 14px; font-size: 15px; font-weight: 600; }
+.wa-submit { font: inherit; font-size: 18px; font-weight: 600; cursor: pointer; border: 0; background: #1a1512; color: #f6f4f1; padding: 18px 40px; border-radius: 999px; }
+.wa-submit:hover { background: #f6f4f1; color: #ff4328; }
+.wa-note { font-size: 13px; opacity: .8; margin: 14px 0 0; }
+
+/* Brand logo */
+.brand { display: inline-flex; align-items: center; line-height: 0; }
+.brand img { height: 48px; width: auto; display: block; }
+footer .brand img { height: 38px; }
+/* Social icons: recognisable marks rather than word labels */
+.socials { display: inline-flex; align-items: center; gap: 16px; }
+.socials a { display: inline-flex; color: inherit; }
+.socials svg { width: 20px; height: 20px; display: block; }
+.socials a:hover { color: #f6f4f1; }
+.facts .socials a { color: #4a423b; }
+.facts .socials a:hover { color: #ff4328; }
+.foot-links { flex-wrap: wrap; align-items: center; row-gap: 12px; }
+.foot-phones a { white-space: nowrap; }
+@media (max-width: 760px) {
+  .brand img { height: 34px; }
+  footer .brand img { height: 30px; }
+  footer { justify-content: center; text-align: center; }
+  .foot-links { justify-content: center; gap: 16px; }
+  .facts { grid-template-columns: 1fr; gap: 4px 0; }
+  .facts dt { margin-top: 14px; }
+}
