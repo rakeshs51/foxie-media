@@ -818,6 +818,11 @@ class Component extends DCLogic {
   function attempt(v) {
     if (document.hidden) return;              // retried on visibilitychange
     if (!v.isConnected || !v.paused) return;
+    // Every caller funnels through here, including the element's own
+    // loadeddata/canplay/stalled listeners - which do not go via an observer.
+    // Without this, one stray media event on an off-screen clip starts a full
+    // download, which is how the AI strip pulled 8MB while 4000px below the fold.
+    if (indexOf(v) === -1 && !nearViewport(v, 120)) return;
     v.muted = true; v.defaultMuted = true;    // refused outright if not muted
     var p = v.play();
     if (p && p.catch) p.catch(function () {}); // the loop below tries again
