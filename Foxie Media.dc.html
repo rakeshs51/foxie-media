@@ -773,6 +773,28 @@ class Component extends DCLogic {
     });
   }, { rootMargin: '400px' });
 
+  // Start fetching well before a card is needed. preload="none" means a clip
+  // only begins downloading when play() is called, and at the strip's speed the
+  // play margin is a few seconds of lead - not enough to hide the fetch, so
+  // cards arrived on screen still blank. This gives them a long head start.
+  function warm(v) {
+    if (v.dataset.warm) return;
+    v.dataset.warm = '1';
+    v.preload = 'auto';
+    try { v.load(); } catch (err) {}
+  }
+  var warmIo = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      // Before the marquee lays out, every card sits at the same spot and so
+      // every one "intersects" - which would fetch the whole strip at once.
+      // Require a laid-out box before treating the hit as real.
+      if (e.target.getBoundingClientRect().width < 20) return;
+      warm(e.target);
+      warmIo.unobserve(e.target);
+    });
+  }, { rootMargin: '600px' });
+
   // Which clips should be playing right now. Playback is *reconciled* rather
   // than fired once per intersection: a single play() can be refused - a page
   // loading in a background tab has every one aborted to save power - and the
@@ -812,11 +834,30 @@ class Component extends DCLogic {
     });
   }, { rootMargin: '100px' });
 
+  // IntersectionObserver callbacks are not delivered while a document is
+  // hidden, so a page opened in a background tab can reach visibility with
+  // `wanted` still empty - leaving nothing for reconcile to act on. Fall back
+  // to measuring geometry directly.
+  function onScreen(v) {
+    var r = v.getBoundingClientRect();
+    return r.right > 0 && r.left < window.innerWidth && r.bottom > 0 && r.top < window.innerHeight;
+  }
+  function sweep() {
+    if (document.hidden) return;
+    var all = document.querySelectorAll('.reel-card video[data-reel], .ai-card video[data-reel]');
+    Array.prototype.forEach.call(all, function (v) {
+      if (!onScreen(v)) return;
+      if (indexOf(v) === -1) wanted.push(v);
+      warm(v);
+      attempt(v);
+    });
+  }
+
   // Anything that can end a refusal gets another go.
-  setInterval(reconcile, 1000);
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) reconcile(); });
-  window.addEventListener('pageshow', reconcile);
-  window.addEventListener('focus', reconcile);
+  setInterval(function () { reconcile(); sweep(); }, 1000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) { reconcile(); sweep(); } });
+  window.addEventListener('pageshow', function () { reconcile(); sweep(); });
+  window.addEventListener('focus', function () { reconcile(); sweep(); });
 
   // The page is rendered client-side and the reel can be re-rendered, which
   // swaps in fresh <video> nodes. Keep rescanning rather than running once.
@@ -837,8 +878,19 @@ class Component extends DCLogic {
       v.addEventListener('canplay', function () { attempt(v); });
       v.addEventListener('stalled', function () { attempt(v); });
       posterIo.observe(v);
+      warmIo.observe(v);
       io.observe(v);
     });
+
+    // The cards already on screen at first paint get no lead time at all, so
+    // fetch the opening run of each strip immediately rather than waiting for
+    // an observer. At ~140KB a clip this is a small, bounded cost.
+    if (!scan.warmed) {
+      scan.warmed = true;
+      ['.reel-card video', '.ai-card video'].forEach(function (sel) {
+        Array.prototype.slice.call(document.querySelectorAll(sel), 0, 6).forEach(warm);
+      });
+    }
   }
   function queueScan() {
     if (queued) return;
