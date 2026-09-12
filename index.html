@@ -789,7 +789,7 @@ class Component extends DCLogic {
       // Before the marquee lays out, every card sits at the same spot and so
       // every one "intersects" - which would fetch the whole strip at once.
       // Require a laid-out box before treating the hit as real.
-      if (e.target.getBoundingClientRect().width < 20) return;
+      if (!nearViewport(e.target, 600)) return;
       warm(e.target);
       warmIo.unobserve(e.target);
     });
@@ -800,6 +800,18 @@ class Component extends DCLogic {
   // loading in a background tab has every one aborted to save power - and the
   // observer would never fire again while the card stays on screen, leaving it
   // stuck on its poster. So we keep re-asserting the intent instead.
+  // A card is only genuinely in play range once the strip has laid out. Before
+  // that every card sits at the same spot and reports as intersecting, so the
+  // observer's first callback would start all 66 clips downloading at once -
+  // including the AI strip 4000px below the fold, which then starves the few
+  // that are actually on screen.
+  function nearViewport(v, m) {
+    var r = v.getBoundingClientRect();
+    if (r.width < 20 || r.height < 20) return false;
+    return r.right > -m && r.left < window.innerWidth + m &&
+           r.bottom > -m && r.top < window.innerHeight + m;
+  }
+
   var wanted = [];
   function indexOf(v) { return Array.prototype.indexOf.call(wanted, v); }
 
@@ -823,7 +835,7 @@ class Component extends DCLogic {
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       var v = e.target;
-      if (e.isIntersecting) {
+      if (e.isIntersecting && nearViewport(v, 120)) {
         if (indexOf(v) === -1) wanted.push(v);
         attempt(v);
       } else {
