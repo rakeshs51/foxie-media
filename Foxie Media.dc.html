@@ -855,15 +855,19 @@ class Component extends DCLogic {
   // hidden, so a page opened in a background tab can reach visibility with
   // `wanted` still empty - leaving nothing for reconcile to act on. Fall back
   // to measuring geometry directly.
-  function onScreen(v) {
-    var r = v.getBoundingClientRect();
-    return r.right > 0 && r.left < window.innerWidth && r.bottom > 0 && r.top < window.innerHeight;
-  }
   function sweep() {
     if (document.hidden) return;
     var all = document.querySelectorAll('.reel-card video[data-reel], .ai-card video[data-reel]');
-    Array.prototype.forEach.call(all, function (v) {
-      if (!onScreen(v)) return;
+    var near = Array.prototype.filter.call(all, function (v) { return nearViewport(v, 0); });
+    // Hard cap, nearest first. During the client-side render the strips are not
+    // positioned yet and cards briefly read as on-screen; without a bound this
+    // swept in the whole AI strip - 38 clips, ~8MB - while it sat below the fold.
+    var mid = window.innerHeight / 2;
+    near.sort(function (a, b) {
+      var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      return Math.abs(ra.top + ra.height / 2 - mid) - Math.abs(rb.top + rb.height / 2 - mid);
+    });
+    near.slice(0, 8).forEach(function (v) {
       if (indexOf(v) === -1) wanted.push(v);
       warm(v);
       attempt(v);
@@ -904,9 +908,9 @@ class Component extends DCLogic {
     // an observer. At ~140KB a clip this is a small, bounded cost.
     if (!scan.warmed) {
       scan.warmed = true;
-      ['.reel-card video', '.ai-card video'].forEach(function (sel) {
-        Array.prototype.slice.call(document.querySelectorAll(sel), 0, 6).forEach(warm);
-      });
+      // Only the strip that is actually near the fold on arrival.
+      Array.prototype.slice.call(document.querySelectorAll('.reel-card video'), 0, 6)
+        .forEach(function (v) { if (nearViewport(v, 900)) warm(v); });
     }
   }
   function queueScan() {
